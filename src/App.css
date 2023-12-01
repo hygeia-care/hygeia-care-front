@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,11 @@
   to {
     transform: rotate(360deg);
   }
+}
+ */
+
+:root {
+  --primaryColor: '#cce1c6';
+  --secondaryColor: '#0F6B3A';
+  --lightSecondaryColor: '#4A9538';
 }
