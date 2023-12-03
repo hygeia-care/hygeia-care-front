@@ -10,13 +10,16 @@ import { useNavigate } from 'react-router-dom';
 export default function TopNav() {
   const items = useSelector((state: RootState) => state.navigation.items);
   const navigate = useNavigate();
-  function goHome() {
-    navigate('/');
-  }
+
   return (
     <div className="topnav-container">
       <header className="header">
-        <img src={image} alt="Hygeia Logo" className="logo" onClick={goHome} />
+        <img
+          src={image}
+          alt="Hygeia Logo"
+          className="logo"
+          onClick={() => navigate('/')}
+        />
         <div className="navigation">
           <Menubar model={items} />
         </div>
