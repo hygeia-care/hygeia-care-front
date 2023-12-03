@@ -39,7 +39,7 @@
  */
 
 :root {
-  --primaryColor: '#cce1c6';
-  --secondaryColor: '#0F6B3A';
-  --lightSecondaryColor: '#4A9538';
+  --primaryColor: #cce1c6;
+  --secondaryColor: #0f6b3a;
+  --lightSecondaryColor: #4a9538;
 }

@@ -2,18 +2,17 @@
 import React from 'react';
 import TopNav from '../TopNav/TopNav';
 import './HomePage.css';
-import hygeiaLogo from '../assets/hygeia-logo.png'; // Asegúrate de que la ruta es correcta
 
 const HomePage = () => {
   return (
     <div className="home-container">
       <header className="header">
         <img
-          src={hygeiaLogo}
+          src="../assets/hygeia-logo.png"
           alt="Hygeia Logo"
           className="logo"
         />
-        <TopNav /> {/* Utiliza el componente NavigationBar aquí */}
+        <TopNav />
       </header>
       <main className="main-content">
         {/* ... el resto del contenido principal ... */}

@@ -1,18 +1,9 @@
 /* NavigationBar.css */
-.navigation {
-  display: flex;
-  justify-content: space-evenly;
-  background-color: var(--secondaryColor);
-  padding: 1rem;
-}
 
-.navigation a {
-  color: white;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  transition: background-color 0.3s ease;
-}
-
-.navigation a:hover {
-  background-color: var(--lightSecondaryColor);
+.p-menubar {
+  background: var(--secondaryColor) !important;
+  .p-menuitem-icon,
+  .p-menuitem-text {
+    color: white !important;
+  }
 }
