@@ -7,3 +7,26 @@
     color: white !important;
   }
 }
+
+.topnav-container {
+  display: flex;
+  flex-direction: column;
+  height: var(--topnav-height);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--primaryColor);
+}
+
+.logo {
+  max-width: 200px;
+  transform: scale(2);
+  padding-left: 40px;
+  &:hover {
+    cursor: pointer;
+  }
+}
