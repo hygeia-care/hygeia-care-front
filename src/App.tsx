@@ -11,7 +11,7 @@ import 'primereact/resources/themes/saga-blue/theme.css';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import AppRouter from './AppRouter';
-import TopNav from './TopNav/TopNav';
+import TopNav from './components/TopNav/TopNav';
 export default function App() {
   return (
     <div className="App">
