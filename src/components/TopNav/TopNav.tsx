@@ -2,8 +2,8 @@
 import { Menubar } from 'primereact/menubar';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import image from '../assets/hygeia-logo.png'; // Asegúrate de que la ruta sea correcta
-import { RootState } from '../redux/store';
+import image from '../../assets/hygeia-logo.png';
+import { RootState } from '../../redux/store';
 import './TopNav.css';
 import { useNavigate } from 'react-router-dom';
 

@@ -1,7 +1,7 @@
 // HomePage.js
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { ROLE, setNavigationItems } from '../redux/slices/navigationSlice';
+import { ROLE, setNavigationItems } from '../../redux/slices/navigationSlice';
 import './HomePage.css';
 export default function HomePage() {
   const dispatch = useDispatch();

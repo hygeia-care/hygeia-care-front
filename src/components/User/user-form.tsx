@@ -1,56 +1,42 @@
-import './LoginPage.css';
+// EditUserFormUI.tsx
 
-// LoginPage.js
-import React, { useState } from 'react';
+import React from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
-import 'primereact/resources/themes/saga-blue/theme.css'; // Tema
-import 'primereact/resources/primereact.min.css'; // Núcleo de PrimeReact
-import 'primeicons/primeicons.css'; // Iconos
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/slices/userSlice';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
-const EditUserForm = () => {
+interface UserFormUIProps {
+  name: string;
+  surnames: string;
+  email: string;
+  password: string;
+  companiaSanitaria: string;
+  tarjetaSanitaria: string;
+  handleEditUser: (e: any) => void;
+  setName: (value: string) => void;
+  setSurnames: (value: string) => void;
+  setEmail: (value: string) => void;
+  setPassword: (value: string) => void;
+  setCompaniaSanitaria: (value: string) => void;
+  setTarjetaSanitaria: (value: string) => void;
+}
 
-    const navigate = useNavigate();
-
-    const [name, setName] = useState('');
-    const [password, setPassword] = useState('');
-    const [surnames, setSurnames] = useState('');
-    const [email, setEmail] = useState('');
-    const [companiaSanitaria, setCompaniaSanitaria] = useState('');
-    const [tarjetaSanitaria, setTarjetaSanitaria] = useState('');
-
-    const handleEditUser = async (e: any) => {
-        e.preventDefault();
-        const updateUserData = {
-            "nombre": name,
-            "email": email,
-            "password": password,
-            "apellidos": surnames,
-            "compañiaSanitaria": companiaSanitaria,
-            "tarjetaSanitaria": tarjetaSanitaria,
-            "rol": "Usuario",
-        };
-
-        try {
-            const response = await axios.post('http://localhost:3000/api/v1/auth/users', updateUserData);
-            console.log(response.status);
-            if(response.status===201) {
-                console.log("Registro exitoso");
-                navigate("/login");
-            }
-            console.log(updateUserData);
-        } catch (error) {
-            console.error("No es posible registrar el usuario")
-        }
-
-    };
-
-    return (
-        <div className="edit-user-container">
+const UserFormUI: React.FC<UserFormUIProps> = ({
+  name,
+  surnames,
+  email,
+  password,
+  companiaSanitaria,
+  tarjetaSanitaria,
+  handleEditUser,
+  setName,
+  setSurnames,
+  setEmail,
+  setPassword,
+  setCompaniaSanitaria,
+  setTarjetaSanitaria,
+}) => {
+  return (
+    <div className="user-container">
             <div className="card">
                 <h1>Datos</h1>
                 <form onSubmit={handleEditUser}>
@@ -123,7 +109,7 @@ const EditUserForm = () => {
                 </form>
             </div>
         </div>
-    );
+  );
 };
 
-export default EditUserForm;
+export default UserFormUI;
