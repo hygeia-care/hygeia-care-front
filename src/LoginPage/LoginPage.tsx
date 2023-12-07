@@ -8,11 +8,12 @@ import axios from 'axios';
 import 'primereact/resources/themes/saga-blue/theme.css'; // Tema
 import 'primereact/resources/primereact.min.css'; // Núcleo de PrimeReact
 import 'primeicons/primeicons.css'; // Iconos
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (e:any) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ const LoginPage = () => {
         username,
         password,
       });
-    
+      navigate("/");
       // Handle the response, e.g., redirect to another page on success
       console.log('Login successful', response.data);
     } catch (error: any) {

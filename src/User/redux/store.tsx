@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import navigationReducer from './slices/navigationSlice';
-import userReducer from './slices/userSlice'
+import editUserReducer from './userSlice'
 
 export const store = configureStore({
   reducer: {
-    navigation: navigationReducer,
-    userReducer: userReducer,
+    editUser: editUserReducer,
     // otros reducers aquí si los tienes
   },
 });

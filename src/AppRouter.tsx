@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import HomePage from './HomePage/HomePage';
 import LoginPage from './LoginPage/LoginPage';
 import NotFoundPage from './NotFoundPage/NotFoundPage';
-import EditUserForm from './views/form-user';
+import EditUserForm from './User/components/form-register-user';
 
 // ...otros imports de página
 
