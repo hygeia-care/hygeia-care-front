@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^14.5.1",
     "@types/jest": "^29.5.10",
     "axios": "^1.6.2",
+    "date-fns": "^2.30.0",
     "primeicons": "^6.0.1",
     "primereact": "^10.2.1",
     "react": "^18.2.0",
