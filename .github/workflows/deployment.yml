@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    uses: hygeia-care/hygeia-care-front/.github/workflows/tests.yml@main
+   uses: hygeia-care/hygeia-care-front/.github/workflows/tests.yml@main
 
   deploy:
     needs: test
