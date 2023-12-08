@@ -5,8 +5,8 @@ on:
       branches: [ main ]
 
 jobs:
-  # test:
-    # uses: hygeia-care/hygeia-care-front/.github/workflows/tests.yml@main
+  test:
+   uses: hygeia-care/hygeia-care-front/.github/workflows/tests.yml@main
 
   deploy:
     needs: test
