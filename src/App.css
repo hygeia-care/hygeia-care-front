@@ -1,0 +1,33 @@
+:root {
+  --primaryColor: #cce1c6;
+  --secondaryColor: #0f6b3a;
+  --lightSecondaryColor: #4a9538;
+
+  --topnav-height: 100px;
+  --footer-height: 50px;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--topnav-height) - var(--footer-height));
+}
+
+.content {
+  flex: 1;
+  min-height: calc(100vh - var(--topnav-height) - var(--footer-height));
+}
+
+.footer {
+  /* Usa variables CSS si las dimensiones pueden cambiar o si necesitas reutilizar los valores */
+  height: var(--footer-height);
+  background-color: var(--primaryColor);
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+.footer a {
+  color: var(--secondaryColor);
+  text-decoration: none;
+}

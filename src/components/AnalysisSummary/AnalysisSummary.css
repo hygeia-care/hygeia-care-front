@@ -1,0 +1,40 @@
+.analysisContainer {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.tableContainer {
+  width: 70%;
+}
+
+.dataTable {
+  width: 100%;
+}
+
+.detailsButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* Dialog */
+.modalContainer {
+  width: 50%;
+  border-radius: 8px;
+}
+
+.modalHeader {
+  background-color: #f4f4f4;
+  color: #333;
+  padding: 10px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.modalContent {
+  padding: 20px;
+}

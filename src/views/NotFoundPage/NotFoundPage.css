@@ -1,0 +1,19 @@
+/* App.css o NotFoundPage.css */
+.not-found-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: inherit;
+  background-color: #f4f4f4;
+}
+
+.not-found-container .card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+  /* Ajusta el ancho según necesites */
+}
+
+.not-found-container .card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
