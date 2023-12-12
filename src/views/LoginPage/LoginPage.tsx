@@ -19,14 +19,19 @@ const LoginPage = () => {
     e.preventDefault();
     // Aquí colocarías la lógica de login, por ejemplo, una llamada API
     try {
-      // Assuming you are making a POST request to this API endpoint
-      const response = await axios.post('http://localhost:3000/api/v1/auth/users', {
-        username,
-        password,
-      });
+      const request = new Request('http://localhost:3000/api/v1/auth/users/login', {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzBjMDYzNDY3ZmEwMWZkYWZmMDkxZSIsInJvbCI6IlVzdWFyaW8iLCJpYXQiOjE3MDIxNTE3NzN9.xp9pJ6HLc2TV24LsVJQhVqhy_Mjwe6yeukryqlOiLW4',
+            'Authorization': 'Bearer 04f9237d-646e-4e0d-90d2-504b1f7dcbc0',
+          },
+          method: 'POST',
+        })
       navigate("/");
+      const response = await fetch(request);
       // Handle the response, e.g., redirect to another page on success
-      console.log('Login successful', response.data);
+      console.log('Login successful', response.status);
+      //GUARDAR LOS DATOS EN EL LOCAL STORAGE (ID DE USUARIO Y TOKEN)
     } catch (error: any) {
       // Handle errors, e.g., display an error message
       console.error('Login failed', error.message);

@@ -11,7 +11,7 @@ const UserProfile: React.FC = () => {
     email: 'ana@example.com',
     password: 'contraseñaSegura123',
     apellidos: 'García Pérez',
-    compañiaSanitaria: 'SaludPlus',
+    companiaSanitaria: 'SaludPlus',
     tarjetaSanitaria: 'SP1234567890',
   };
 

@@ -3,6 +3,6 @@ export interface User {
     email: string;
     password: string;
     apellidos: string;
-    compañiaSanitaria: string;
+    companiaSanitaria: string;
     tarjetaSanitaria: string;
 }

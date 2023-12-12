@@ -9,8 +9,12 @@ import 'primeicons/primeicons.css';
 
 import 'primereact/resources/themes/saga-blue/theme.css';
 import React from 'react';
+import ReactModal from 'react-modal';
 import AppRouter from './AppRouter';
 import TopNav from './components/TopNav/TopNav';
+
+ReactModal.setAppElement('/');
+
 export default function App() {
   return (
     <div className="App">
