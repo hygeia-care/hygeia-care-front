@@ -42,7 +42,7 @@ function getMenu(role: ROLE): MenuItem[] {
       {
         label: 'My data',
         icon: PrimeIcons.USER,
-        url: '/createAccount',
+        url: '/profile',
       },
       {
         label: 'My bills',
@@ -52,7 +52,8 @@ function getMenu(role: ROLE): MenuItem[] {
       {
         label: 'Logout',
         icon: PrimeIcons.SIGN_OUT,
-        url: '/faq',
+        url: '/',
+        command: () => localStorage.clear()
       },
     ];
   }
@@ -66,7 +67,7 @@ function getMenu(role: ROLE): MenuItem[] {
       {
         label: 'Create account',
         icon: PrimeIcons.USER_PLUS,
-        url: '/createAccount',
+        url: '/register',
       },
       {
         label: 'Pricing',
