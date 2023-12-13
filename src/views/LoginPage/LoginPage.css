@@ -32,3 +32,7 @@
   margin-top: 1em;
   width: 100%;
 }
+
+.error-message{
+  color:firebrick
+}

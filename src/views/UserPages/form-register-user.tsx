@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserFormUI from '../../components/User/user-form';
 import { isNotEmpty, isValidEmail, isValidPassword } from './validation';
-import Modal from 'react-modal'; // Importa la librería
+import Modal from 'react-modal';
+import { API_BASE_URL } from '../../api_variables';
 
 const RegisterUserForm = () => {
   const navigate = useNavigate();
@@ -23,6 +24,11 @@ const RegisterUserForm = () => {
     tarjetaSanitaria: false,
   });
   const [isRegistrationSuccess, setRegistrationSuccess] = useState(false);
+
+  const closeSuccessMessage = () => {
+    setRegistrationSuccess(false);
+    navigate("/login")
+  };
 
   const handleEditUser = async (e: any) => {
     e.preventDefault();
@@ -59,7 +65,7 @@ const RegisterUserForm = () => {
       };
 
       try {
-        const request = new Request('http://localhost:3000/api/v1/auth/users', {
+        const request = new Request(API_BASE_URL+'auth/users', {
           headers: {
             'Content-Type': 'application/json',
             'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzBjMDYzNDY3ZmEwMWZkYWZmMDkxZSIsInJvbCI6IlVzdWFyaW8iLCJpYXQiOjE3MDIxNTE3NzN9.xp9pJ6HLc2TV24LsVJQhVqhy_Mjwe6yeukryqlOiLW4',
@@ -68,17 +74,22 @@ const RegisterUserForm = () => {
           method: 'POST',
           body: JSON.stringify(registerUser)
         })
+
         const response = await fetch(request);
         console.log(response.status);
+
         if (response.status === 201) {
           console.log("Registro exitoso");
           setRegistrationSuccess(true);
-          navigate("/login");
+          console.log(isRegistrationSuccess)
+          console.log("Usuario registrado")
+
         } else if (response.status === 409) {
           setErrors({ ...errors, email: true });
           console.log("Se ha producido un conflicto a la hora de enviar el formulario");
         }
         console.log(registerUser);
+
       } catch (error) {
         console.log("No es posible registrar el usuario" + error)
         console.log(errors)
@@ -87,10 +98,6 @@ const RegisterUserForm = () => {
       console.log("Los campos no se han rellenado correctamente")
     }
 
-  };
-
-  const closeSuccessMessage = () => {
-    setRegistrationSuccess(false);
   };
 
   return (
