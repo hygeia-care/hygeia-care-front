@@ -8,7 +8,12 @@ export default function HomePage() {
   useEffect(() => {
     // Esta función se ejecutará una vez que el componente se monte
     console.log('Componente montado!');
-    dispatch(setNavigationItems(ROLE.NOT_LOGGED));
+    if(localStorage.getItem("authToken")) {
+      dispatch(setNavigationItems(ROLE.USER));
+    } else {
+      dispatch(setNavigationItems(ROLE.NOT_LOGGED));
+    }
+    
   }, [dispatch]);
 
   return (
