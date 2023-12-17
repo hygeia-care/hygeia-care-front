@@ -4,6 +4,9 @@ metadata:
   name: frontend
   labels:
     {{- include "frontend.labels" . | nindent 4 }}
+  annotations:
+    dev.okteto.com/auto-ingress: "true"
+
 spec:
   type: ClusterIP
   ports:
