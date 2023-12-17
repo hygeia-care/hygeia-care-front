@@ -2,5 +2,4 @@ tag: dev
 
 frontend:
   replicaCount: 1
-  # image: okteto.dev/frontend
-  image: registry.cloud.okteto.net/fis-app-rodrialter/frontend
+  image: okteto.dev/frontend
