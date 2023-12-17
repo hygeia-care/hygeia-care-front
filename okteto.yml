@@ -1,0 +1,12 @@
+build:
+  hygeia-care-front:
+    context: .
+
+deploy:
+ - helm upgrade --install hygeia-care-frontend chart --set tag=${OKTETO_GIT_COMMIT}
+
+dev:
+  hygeia-care-front: 
+    command: npm start
+    sync:
+      - .:/app
