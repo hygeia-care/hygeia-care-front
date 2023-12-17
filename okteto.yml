@@ -3,6 +3,7 @@ build:
     context: .
 
 deploy:
+ - okteto build -t okteto.dev/frontend:${OKTETO_GIT_COMMIT} .
  - helm upgrade --install hygeia-care-frontend chart --set tag=${OKTETO_GIT_COMMIT}
 
 dev:
