@@ -6,7 +6,7 @@ import LoginPage from './views/LoginPage/LoginPage';
 import NotFoundPage from './views/NotFoundPage/NotFoundPage';
 import UserForm from './views/UserPages/form-register-user';
 import UserProfile from './views/UserPages/UserProfile';
-import AppointmentList from './views/Appointments/My_appointments';
+// import AppointmentList from './views/Appointments/My_appointments';
 
 // ...otros imports de página
 
@@ -17,7 +17,7 @@ const AppRouter = () => {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<UserForm />} />
       <Route path="/profile" element={<UserProfile />} />
-      <Route path="/appointments" element={<AppointmentList />} />
+      {/* <Route path="/appointments" element={<AppointmentList />} /> */}
       {/* ... otras rutas */}
       <Route path='*' element={<NotFoundPage />} /> {/* Ruta por defecto en la raíz*/}
     </Routes>

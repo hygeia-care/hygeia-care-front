@@ -1,9 +1,8 @@
 import { format } from 'date-fns';
-import { Column } from 'primereact/column';
-import { DataTable } from 'primereact/datatable';
 import { Dialog } from 'primereact/dialog';
 import React, { useState } from 'react';
 import { Analysis } from '../../models/devices';
+import TableComponent, { ColumnConfig } from '../Table/TableComponent';
 import './AnalysisSummary.css';
 
 interface AnalysisSummaryProps {
@@ -28,38 +27,28 @@ const AnalysisSummary: React.FC<AnalysisSummaryProps> = ({ analyses }) => {
   };
 
   const measurementDate = (rowData: Analysis) => {
-    if (rowData.measurement.date instanceof Date) {
-      return format(rowData.measurement.date, 'dd/MM/yyyy HH:mm');
-    } else {
-      return rowData.measurement.date;
-    }
+    return format(rowData.measurement.date, 'dd/MM/yyyy HH:mm');
   };
 
-  const detailsButton = (analysis: Analysis) => (
-    <button className="detailsButton" onClick={() => openModal(analysis)}>
+  const detailsButton = (rowData: Analysis) => (
+    <button
+      className="detailsButton"
+      onClick={() => openModal(rowData)}
+    >
       Detalles
     </button>
   );
 
+  const columnsConfig: ColumnConfig[] = [
+    { field: 'value', header: 'Valor' }, // Asumiendo que 'value' es una clave de Analysis
+    { field: 'measurementDate', header: 'Fecha', body: measurementDate }, // Asegúrate de que 'measurementDate' sea una clave válida de Analysis
+    { body: detailsButton } // Para columnas sin campo 'field', no hay problema
+  ];
+
   return (
     <div className="analysisContainer">
       <div className="tableContainer">
-        <DataTable
-          className="dataTable"
-          value={analyses}
-          sortField="measurement.date"
-          sortOrder={-1}
-        >
-          <Column field="value" header="Valor"></Column>
-          <Column
-            field="measurement.date"
-            header="Fecha"
-            body={measurementDate}
-            sortable
-          ></Column>
-          <Column body={detailsButton}></Column>
-        </DataTable>
-
+        <TableComponent value={analyses} columnsConfig={columnsConfig} />
         <AnalysisDetailsModal
           analysis={selectedAnalysis}
           visible={isModalVisible}
@@ -76,10 +65,8 @@ const AnalysisDetailsModal: React.FC<AnalysisDetailsModalProps> = ({
   onHide,
 }) => {
   if (!analysis) return null;
-  const formattedDate = format(
-    new Date(analysis.measurement.date),
-    'dd/MM/yyyy HH:mm'
-  );
+
+  const formattedDate = format(analysis.measurement.date, 'dd/MM/yyyy HH:mm');
   return (
     <Dialog
       header={analysis.measurement.title}
