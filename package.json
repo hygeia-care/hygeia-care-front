@@ -9,6 +9,7 @@
     "date-fns": "^2.30.0",
     "geckodriver": "^4.2.1",
     "jest-environment-jsdom": "^29.7.0",
+    "jwt-decode": "^4.0.0",
     "primeicons": "^6.0.1",
     "primereact": "^10.2.1",
     "react": "^18.2.0",
