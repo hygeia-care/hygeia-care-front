@@ -8,7 +8,7 @@ export interface User {
 }
 
 export enum ROLE {
-  ADMIN = 'Administrador',
+  ADMIN = 'Admin',
   USER = 'Usuario',
   NOT_LOGGED = '',
 }
