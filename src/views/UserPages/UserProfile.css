@@ -1,0 +1,35 @@
+.user-profile-container {
+  padding: 20px;
+}
+
+.user-profile-card {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+}
+
+.user-profile-card .p-card-title {
+  font-size: 1.5rem;
+  color: var(--secondaryColor);
+  text-align: center;
+}
+
+.user-details p {
+  font-size: 1rem;
+  color: #333;
+  margin: 10px 0;
+}
+
+.user-details strong {
+  font-weight: bold;
+  color: var(--lightSecondaryColor);
+}
+
+.profile-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.profile-actions .p-button {
+  margin: 0 10px;
+}
