@@ -2,6 +2,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { API_BASE_URL } from '../api_variables';
 import { getRawJwtToken } from './jwtService';
+import { decreaseRequestCount, increaseRequestCount } from '../components/Spinner/requestCounter';
 
 const http = axios.create({
   baseURL: API_BASE_URL,
@@ -13,6 +14,7 @@ const http = axios.create({
 // Interceptor para añadir el token a las solicitudes
 http.interceptors.request.use(
   (config) => {
+    increaseRequestCount();
     const token = getRawJwtToken();
     if (token) {
       config.headers['x-auth-token'] = `${token}`;
@@ -23,9 +25,18 @@ http.interceptors.request.use(
     return config;
   },
   (error) => {
+    decreaseRequestCount();
     return Promise.reject(error);
   }
 );
+
+http.interceptors.response.use(response => {
+  decreaseRequestCount();
+  return response;
+}, error => {
+  decreaseRequestCount();
+  return Promise.reject(error);
+});
 
 const get = async <T>(url: string, params = {}): Promise<AxiosResponse<T>> => {
   return http.get<T>(url, { params });
