@@ -7,7 +7,7 @@ import AnalysisSummary from '../../components/AnalysisSummary/AnalysisSummary';
 import { mockAnalyses } from '../../mocks/analysis';
 import { ROLE, User } from '../../models/user';
 import { httpService } from '../../services/httpService';
-import { getJwtToken } from '../../services/jwtService';
+import { getJwtToken, isAdmin } from '../../services/jwtService';
 import './UserProfile.css';
 
 async function getUserData(): Promise<User | null> {
@@ -57,6 +57,9 @@ const UserProfile: React.FC = () => {
   }, []);
 
   const handleEdit = async () => {
+    if (!isAdmin()) {
+      return;
+    }
     try {
       await httpService.put<User>(`/auth/users/${user?._id}`, editFormData);
       setUser({ ...user, ...editFormData });
@@ -67,6 +70,9 @@ const UserProfile: React.FC = () => {
   };
 
   const handleDelete = async () => {
+    if (!isAdmin()) {
+      return;
+    }
     try {
       await httpService.delete<User>(`/auth/users/${user?._id}`);
       setIsEditDialogVisible(false);
@@ -195,15 +201,17 @@ const UserProfile: React.FC = () => {
       <div className="analysis-summary">
         <AnalysisSummary analyses={mockAnalyses} />
       </div>
-      <div className="profile-actions">
-        <Button label="Editar" icon="pi pi-pencil" onClick={showEditDialog} />
-        <Button
-          label="Eliminar"
-          icon="pi pi-trash"
-          onClick={showDeleteDialog}
-          className="p-button-danger"
-        />
-      </div>
+      {isAdmin() && (
+        <div className="profile-actions">
+          <Button label="Editar" icon="pi pi-pencil" onClick={showEditDialog} />
+          <Button
+            label="Eliminar"
+            icon="pi pi-trash"
+            onClick={showDeleteDialog}
+            className="p-button-danger"
+          />
+        </div>
+      )}
     </Card>
   ) : (
     <p>Cargando perfil...</p>
