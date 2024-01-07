@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes, useLocation } from 'react-router-dom';
+import ProtectedRoute from './components/User/ProtectedRoute';
 import { ROLE } from './models/user';
 import { setNavigationItems } from './redux/slices/navigationSlice';
 import { getJwtToken } from './services/jwtService';
@@ -26,13 +27,20 @@ const AppRouter = () => {
       dispatch(setNavigationItems(ROLE.NOT_LOGGED));
     }
   }, [dispatch, location]); // Observa los cambios en la ubicación
-  
+
   return (
     <Routes>
       <Route index element={<HomePage />} /> {/* Ruta por defecto en la raíz*/}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<UserForm />} />
-      <Route path="/profile" element={<UserProfile />} />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <UserProfile />
+          </ProtectedRoute>
+        }
+      />
       {/* <Route path="/appointments" element={<AppointmentList />} /> */}
       {/* ... otras rutas */}
       <Route path="*" element={<NotFoundPage />} />{' '}

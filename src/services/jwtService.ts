@@ -1,6 +1,6 @@
 // jwtService.ts
 import { jwtDecode } from 'jwt-decode';
-import { JwtUserData } from '../models/user';
+import { JwtUserData, ROLE } from '../models/user';
 
 export function decodeToken(token: string): JwtUserData | null {
   try {
@@ -30,5 +30,14 @@ export function getJwtToken(): JwtUserData | null {
     return decodeToken(token);
   } else {
     return null;
+  }
+}
+
+export function isAdmin(): boolean {
+  const token: JwtUserData | null = getJwtToken();
+  if (token) {
+    return token.rol === ROLE.ADMIN;
+  } else {
+    return false;
   }
 }

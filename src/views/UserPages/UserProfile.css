@@ -33,3 +33,31 @@
 .profile-actions .p-button {
   margin: 0 10px;
 }
+
+.user-profile-container .edit-dialog {
+  width: 50vw;
+  max-width: 500px; /* Ajusta esto según tus necesidades */
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Espaciado entre campos del formulario */
+}
+
+.edit-form label {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-form input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.edit-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
