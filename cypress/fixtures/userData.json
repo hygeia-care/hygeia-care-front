@@ -1,0 +1,12 @@
+{
+  "_id": "6589ba2dc851232a289a565b",
+  "nombre": "Juan",
+  "email": "juanogtir@prueba.com",
+  "password": "$2b$10$3ZaLu9cbuYGQ9OIpNX9vHuZJr.JijWhrBO3axgABeLunV/8A86.hm",
+  "apellidos": "Noguerol T",
+  "companiaSanitaria": "A",
+  "tarjetaSanitaria": "A",
+  "rol": "Usuario",
+  "__v": 0,
+  "bills": null
+}
