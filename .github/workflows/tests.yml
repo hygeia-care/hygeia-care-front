@@ -29,5 +29,6 @@ jobs:
     - name: Run Cypress tests
       uses: cypress-io/github-action@v2
       with:
+        start: npm test
         wait-on: 'http://localhost:3000' # Cambia a la URL de tu aplicación
         wait-on-timeout: 60
