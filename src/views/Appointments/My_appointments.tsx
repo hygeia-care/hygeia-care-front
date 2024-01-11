@@ -13,9 +13,9 @@ import axios from 'axios';
 interface Appointment {
   id: number;
   date: string;
-  doctor: string; // Cambié el nombre a 'doctor'
-  nameDoctor: string; // Mantuve el nombre original
-  lastnameDoctor: string; // Mantuve el nombre original
+  doctor: string; 
+  nameDoctor: string; 
+  lastnameDoctor: string; 
   subject: string;
 }
 
@@ -25,14 +25,14 @@ const MyAppointments = () => {
   const [sortOrder, setSortOrder] = useState<SortOrder>(1);
 
   useEffect(() => {
-    // Realizar la solicitud GET al servidor para obtener citas
+    // Realizar la solicitud GET al servidor para obtener las citas de un paciente en específico, hay que conectarlo con el paciente logueado
     axios.get('http://localhost:3000/api/v1/appointments/patients/345')
       .then(response => {
         // Actualizar el estado con las citas recibidas del servidor
         const formattedAppointments = response.data.map((appointment: Appointment) => ({
           ...appointment,
           date: formatDateTime(appointment.date),
-          doctor: `${appointment.nameDoctor} ${appointment.lastnameDoctor}`, // Nueva propiedad 'doctor' con la concatenación
+          doctor: `${appointment.nameDoctor} ${appointment.lastnameDoctor}`, 
         }));
         setAppointmentsData(formattedAppointments);
       })
