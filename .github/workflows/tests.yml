@@ -22,7 +22,7 @@ jobs:
       run: npm install
 
     - name: Start server
-      run: PORT=3001 react-scripts start &
+      run: PORT=3000 react-scripts start &
       env:
         CI: true
 
