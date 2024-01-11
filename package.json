@@ -26,12 +26,7 @@
     "cypress:open": "cypress open --config-file cypress.config.ts",
     "cypress:run": "cypress run --config-file cypress.config.ts"
   },
-  "proxy": {
-    "/api/*": {
-      "target": "http://localhost:3000",
-      "secure": false
-    }
-  },
+  "proxy": "http://localhost:3000",
   "eslintConfig": {
     "extends": [
       "react-app",
