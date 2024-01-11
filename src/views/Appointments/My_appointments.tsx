@@ -13,9 +13,9 @@ import axios from 'axios';
 interface Appointment {
   id: number;
   date: string;
-  doctor: string; // Cambié el nombre a 'doctor'
-  nameDoctor: string; // Mantuve el nombre original
-  lastnameDoctor: string; // Mantuve el nombre original
+  doctor: string; 
+  nameDoctor: string; 
+  lastnameDoctor: string; 
   subject: string;
 }
 
@@ -32,7 +32,7 @@ const MyAppointments = () => {
         const formattedAppointments = response.data.map((appointment: Appointment) => ({
           ...appointment,
           date: formatDateTime(appointment.date),
-          doctor: `${appointment.nameDoctor} ${appointment.lastnameDoctor}`, // Nueva propiedad 'doctor' con la concatenación
+          doctor: `${appointment.nameDoctor} ${appointment.lastnameDoctor}`, // doctor contiene la concatenación del nombre y el apellido
         }));
         setAppointmentsData(formattedAppointments);
       })
