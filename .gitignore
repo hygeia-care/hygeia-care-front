@@ -47,4 +47,5 @@ Thumbs.db
 
 # Build directory
 build/*
-cypress/downloads/downloads.htm
+cypress/downloads/*
+cypress/screenshots/*

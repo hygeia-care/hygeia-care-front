@@ -26,7 +26,12 @@
     "cypress:open": "cypress open --config-file cypress.config.ts",
     "cypress:run": "cypress run --config-file cypress.config.ts"
   },
-  "proxy": "http://host.docker.internal:6000",
+  "proxy": {
+    "/api/*": {
+      "target": "http://localhost:3000",
+      "secure": false
+    }
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
