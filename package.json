@@ -22,7 +22,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "npx cypress run",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress:open": "cypress open --config-file cypress.config.ts",
+    "cypress:run": "cypress run --config-file cypress.config.ts"
   },
   "proxy": "http://host.docker.internal:6000",
   "eslintConfig": {
