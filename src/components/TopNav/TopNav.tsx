@@ -21,7 +21,7 @@ export default function TopNav() {
           onClick={() => navigate('/')}
         />
         <div className="navigation">
-          <Menubar model={items} />
+          <Menubar model={items} data-testid="menubar" />
         </div>
       </header>
     </div>
