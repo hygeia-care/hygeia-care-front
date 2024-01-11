@@ -13,9 +13,9 @@ import axios from 'axios';
 interface Appointment {
   id: number;
   date: string;
-  doctor: string; // Cambié el nombre a 'doctor'
-  nameDoctor: string; // Mantuve el nombre original
-  lastnameDoctor: string; // Mantuve el nombre original
+  doctor: string; 
+  nameDoctor: string; 
+  lastnameDoctor: string; 
   subject: string;
 }
 
