@@ -13,7 +13,9 @@ import axios from 'axios';
 interface Appointment {
   id: number;
   date: string;
-  doctor: string;
+  doctor: string; // Cambié el nombre a 'doctor'
+  nameDoctor: string; // Mantuve el nombre original
+  lastnameDoctor: string; // Mantuve el nombre original
   subject: string;
 }
 
@@ -30,6 +32,7 @@ const MyAppointments = () => {
         const formattedAppointments = response.data.map((appointment: Appointment) => ({
           ...appointment,
           date: formatDateTime(appointment.date),
+          doctor: `${appointment.nameDoctor} ${appointment.lastnameDoctor}`, // Nueva propiedad 'doctor' con la concatenación
         }));
         setAppointmentsData(formattedAppointments);
       })
@@ -54,13 +57,13 @@ const MyAppointments = () => {
       <div className="table-container">
         <DataTable value={appointmentsData} sortField={sortField} sortOrder={sortOrder} onSort={onSort}>
           <Column field="date" header="Fecha y Hora" sortable className="date-column" />
-          <Column field="nameDoctor" header="Nombre del Doctor" className="doctor-column" />
+          <Column field="doctor" header="Nombre del Doctor" className="doctor-column" />
           <Column field="subject" header="Asunto de la Cita" className="subject-column" />
         </DataTable>
       </div>
       <div className="back-link">
         <Link to="/">
-          <Button label="Volver al Inicio" className="p-button-success" />
+          <Button label="Volver al Inicio" className="p-button-success custom-botton" />
         </Link>
       </div>
     </div>
