@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["cypress"],
     "jsx": "react",
     "target": "es2016",
     "module": "esnext",
@@ -15,5 +16,5 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["src", "typings.d.ts"]
+  "include": ["src", "typings.d.ts", "cypress/**/*.ts", "cypress/types/*.d.ts"]
 }
