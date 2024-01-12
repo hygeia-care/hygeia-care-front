@@ -6,12 +6,12 @@ import ProtectedRoute from './components/User/ProtectedRoute';
 import { ROLE } from './models/user';
 import { setNavigationItems } from './redux/slices/navigationSlice';
 import { getJwtToken } from './services/jwtService';
+import MyAppointments from './views/Appointments/My_appointments';
 import HomePage from './views/HomePage/HomePage';
 import LoginPage from './views/LoginPage/LoginPage';
 import NotFoundPage from './views/NotFoundPage/NotFoundPage';
 import UserProfile from './views/UserPages/UserProfile';
 import UserForm from './views/UserPages/form-register-user';
-// import AppointmentList from './views/Appointments/My_appointments';
 
 // ...otros imports de página
 
@@ -41,7 +41,7 @@ const AppRouter = () => {
           </ProtectedRoute>
         }
       />
-      {/* <Route path="/appointments" element={<AppointmentList />} /> */}
+      <Route path="/appointments" element={<MyAppointments />} />
       {/* ... otras rutas */}
       <Route path="*" element={<NotFoundPage />} />{' '}
       {/* Ruta por defecto en la raíz*/}
