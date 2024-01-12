@@ -19,8 +19,8 @@
     "web-vitals": "^3.5.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "PORT=3001 react-scripts start",
+    "build": " react-scripts build",
     "test": "npx cypress run",
     "eject": "react-scripts eject",
     "cypress:open": "cypress open --config-file cypress.config.ts",
@@ -57,6 +57,7 @@
     "@types/react": "^18.2.41",
     "@types/react-dom": "^18.2.17",
     "@types/react-modal": "^3.16.3",
+    "cross-env": "^7.0.3",
     "cypress": "^13.6.2",
     "eslint-plugin-cypress": "^2.15.1",
     "identity-obj-proxy": "^3.0.0",

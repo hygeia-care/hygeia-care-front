@@ -1,6 +1,6 @@
 describe('Pruebas para AnalysisSummary', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4200');
+    cy.visit('http://localhost:3333');
     cy.login();
   });
 
