@@ -32,7 +32,7 @@ const MyAppointments = () => {
         const formattedAppointments = response.data.map((appointment: Appointment) => ({
           ...appointment,
           date: formatDateTime(appointment.date),
-          doctor: `${appointment.nameDoctor} ${appointment.lastnameDoctor}`, // Nueva propiedad 'doctor' con la concatenación
+          doctor: `${appointment.nameDoctor} ${appointment.lastnameDoctor}`, // doctor contiene la concatenación del nombre y el apellido
         }));
         setAppointmentsData(formattedAppointments);
       })
