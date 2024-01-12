@@ -61,5 +61,6 @@ Cypress.Commands.add('login', () => {
   cy.get('input#password').type('password');
   cy.mockLogin();
   cy.get('button[type="submit"]').click();
+  cy.getByTestId('menubar').should('exist');
   cy.getTopNavItemByText('My data').should('exist');
 });

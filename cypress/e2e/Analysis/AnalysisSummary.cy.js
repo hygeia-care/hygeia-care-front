@@ -1,6 +1,6 @@
 describe('Pruebas para AnalysisSummary', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3000'); // Asegúrate de poner la ruta correcta donde se encuentra tu componente AnalysisSummary
+    cy.visit('http://localhost:3001'); // Asegúrate de poner la ruta correcta donde se encuentra tu componente AnalysisSummary
     cy.login();
   });
 
@@ -36,7 +36,7 @@ describe('Pruebas para AnalysisSummary', () => {
 
 function mockUserData() {
   cy.fixture('userData.json').then((response) => {
-    cy.intercept('POST', '/api/v1/auth/users/*', {
+    cy.intercept('GET', '/api/v1/auth/users/*', {
       statusCode: 200,
       body: response,
     }).as('userData');
