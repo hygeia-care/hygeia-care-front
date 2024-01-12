@@ -1,6 +1,6 @@
 describe('Pruebas para AnalysisSummary', () => {
   beforeEach(() => {
-    cy.visit('localhost:3000'); // Asegúrate de poner la ruta correcta donde se encuentra tu componente AnalysisSummary
+    cy.visit('http://localhost:3000'); // Asegúrate de poner la ruta correcta donde se encuentra tu componente AnalysisSummary
     cy.login();
   });
 
