@@ -13,7 +13,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: '14'
+        node-version: '18'
 
     - name: Install dependencies
       run: npm install
@@ -26,4 +26,4 @@ jobs:
       with:
         start: npm start
         wait-on: 'http://localhost:3000'
-        wait-on-timeout: 60
+        wait-on-timeout: 120
