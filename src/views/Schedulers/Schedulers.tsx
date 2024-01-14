@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import './Schedulers.css';
 import { Button } from 'primereact/button';
 import { Link } from 'react-router-dom';
+import UserProfile from '../UserPages/UserProfile';
 import axios from 'axios';
 
 interface Scheduler {
@@ -15,16 +16,17 @@ interface Scheduler {
     email: string;
     doctor: string;
   }
-  
+
   const Schedulers = () => {
     const [schedulersData, setSchedulersData] = useState<Scheduler[]>([]);
     const [missingSchedulers, setMissingSchedulers] = useState<Scheduler[]>([]);
     const [selectedScheduler, setSelectedScheduler] = useState<Scheduler | null>(null);
+    const [asunto, setAsunto] = useState<string | null>(null);
   
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const schedulersResponse = await axios.get('http://localhost:3002/api/v1/schedulers');
+          const schedulersResponse = await axios.get('http://localhost:3336/api/v1/schedulers');
           const formattedSchedulers = schedulersResponse.data.map((scheduler: Scheduler) => ({
             ...scheduler,
             date: formatDateTime(scheduler.date),
@@ -32,7 +34,7 @@ interface Scheduler {
           }));
           setSchedulersData(formattedSchedulers);
   
-          const appointmentsResponse = await axios.get('http://localhost:3001/api/v1/appointments');
+          const appointmentsResponse = await axios.get('http://localhost:3335/api/v1/appointments');
           const formattedAppointments = appointmentsResponse.data.map((appointment: Scheduler) => ({
             ...appointment,
             date: formatDateTime(appointment.date),
@@ -70,41 +72,50 @@ interface Scheduler {
             // Aquí puedes realizar acciones con el 'selectedScheduler'
             console.log('Scheduler seleccionado:', selected);
             setSelectedScheduler(selected)
-        } else {
-            // Manejar el caso cuando no se selecciona un Scheduler válido
-            console.warn('Scheduler no encontrado para el email:', selectedEmail);
         }
+    };
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setAsunto(e.target.value);
     };
 
     const handleCreateAppointment = () => {
         // Lógica para crear una cita
+        if (!selectedScheduler) {
+          alert('Debe elegir una cita disponible.');
+        }else if (asunto === null || asunto.trim() === '') {
+          // Muestra la alerta con el mensaje proporcionado
+          alert('El asunto no puede estar vacío.');
+          return;
+        }
         console.log('Crear cita');
         console.log(selectedScheduler)
+        console.log(asunto)
     };
       
     return (
         <div className="scheduler-container">
-            <div className="centered-container">
-                <h2>Citas Disponibles</h2>
-                <select className="custom-select" onChange={(e) => handleSchedulerSelection(e)}>
-                    <option value="">Seleccionar Scheduler</option>
-                    {missingSchedulers.map((missingScheduler) => (
-                    <option key={missingScheduler.id} value={missingScheduler.email}>
-                        {`${missingScheduler.date} - ${missingScheduler.doctor}`}
-                    </option>
-                    ))}
-                </select>
-            </div>
-            <div className="row" style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-                <div className="back-link">
-                <Link to="/appointments">
-                    <Button label="Volver" className="p-button-success custom-botton" />
-                </Link>
-                </div>
-                <div className="new-appointment">
-                    <Button className="p-button custom-botton" label="Crear Cita" onClick={handleCreateAppointment} />
-                </div>
-            </div>
+          <h2>Citas Disponibles</h2>
+          <select className="custom-select" onChange={(e) => handleSchedulerSelection(e)}>
+              <option value="">Selecciona Fecha - Doctor</option>
+              {missingSchedulers.map((missingScheduler) => (
+              <option key={missingScheduler.id} value={missingScheduler.email}>
+                  {`${missingScheduler.date} - ${missingScheduler.doctor}`}
+              </option>
+              ))}
+          </select>
+          <input type="text" id="asunto" name="asunto" placeholder="Asunto" className="custom-input" onChange={handleInputChange}/>
+
+          <div className="row" style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+              <div className="back-link">
+              <Link to="/appointments">
+                  <Button label="Volver" className="p-button-success custom-botton" />
+              </Link>
+              </div>
+              <div className="new-appointment">
+                  <Button className="p-button custom-botton" label="Crear Cita" onClick={handleCreateAppointment} />
+              </div>
+          </div>
         </div>
     );
   };

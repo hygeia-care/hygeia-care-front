@@ -26,7 +26,7 @@ const MyAppointments = () => {
 
   useEffect(() => {
     // Realizar la solicitud GET al servidor para obtener citas
-    axios.get('http://localhost:3000/api/v1/appointments/patients/345')
+    axios.get('http://localhost:3335/api/v1/appointments/patients/345')
       .then(response => {
         // Actualizar el estado con las citas recibidas del servidor
         const formattedAppointments = response.data.map((appointment: Appointment) => ({

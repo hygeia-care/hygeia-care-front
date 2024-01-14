@@ -1,25 +1,49 @@
-.centered-container {
-    text-align: center;
-    margin-top: 50px;
-  }
-  
-  .custom-select {
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-  }
 
-  .create-appointment-button {
-    margin-top: 20px; /* Ajusta según sea necesario */
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    background-color: #4caf50;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .create-appointment-button:hover {
-    background-color: #45a049;
-  }
+.custom-select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  width: 250px;
+}
+
+.centered-container {
+  text-align: center;
+  height: 30px;
+  margin-top: 0px;
+}
+
+.custom-input {
+  padding: 7px;
+  font-size: 16px;
+  border-radius: 5px;
+  width: 250px;
+  height: 42px;
+  margin-top: 50px;
+}
+
+.create-appointment-button {
+  margin-top: 20px; /* Ajusta según sea necesario */
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.create-appointment-button:hover {
+  background-color: #45a049;
+}
+
+.scheduler-container {
+  border: 1px solid #000000;
+  padding: 10px;
+  border-radius: 5px;
+  width: 400px; /* Ajusta según tus preferencias */
+  text-align: center;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(204 225 198);
+}
