@@ -61,10 +61,17 @@ const MyAppointments = () => {
           <Column field="subject" header="Asunto de la Cita" className="subject-column" />
         </DataTable>
       </div>
-      <div className="back-link">
-        <Link to="/">
-          <Button label="Volver al Inicio" className="p-button-success custom-botton" />
-        </Link>
+      <div className="row" style={{ display: 'flex', gap: '10px' }}>
+        <div className="back-link">
+          <Link to="/">
+            <Button label="Volver al Inicio" className="p-button-success custom-botton" />
+          </Link>
+        </div>
+        <div className="new-appointment">
+          <Link to="/schedulers">
+            <Button label="Crear Nueva Cita" className="p-button custom-botton" />
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { ROLE } from './models/user';
 import { setNavigationItems } from './redux/slices/navigationSlice';
 import { getJwtToken } from './services/jwtService';
 import MyAppointments from './views/Appointments/My_appointments';
+import Schedulers from './views/Schedulers/Schedulers';
 import HomePage from './views/HomePage/HomePage';
 import LoginPage from './views/LoginPage/LoginPage';
 import NotFoundPage from './views/NotFoundPage/NotFoundPage';
@@ -42,6 +43,7 @@ const AppRouter = () => {
         }
       />
       <Route path="/appointments" element={<MyAppointments />} />
+      <Route path="/schedulers" element={<Schedulers />} />
       {/* ... otras rutas */}
       <Route path="*" element={<NotFoundPage />} />{' '}
       {/* Ruta por defecto en la raíz*/}

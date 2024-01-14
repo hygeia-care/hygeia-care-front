@@ -1,0 +1,25 @@
+.centered-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .custom-select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+
+  .create-appointment-button {
+    margin-top: 20px; /* Ajusta según sea necesario */
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .create-appointment-button:hover {
+    background-color: #45a049;
+  }
