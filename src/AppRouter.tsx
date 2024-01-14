@@ -22,8 +22,9 @@ const AppRouter = () => {
   useEffect(() => {
     // Esta función se ejecutará una vez que el componente se monte
     console.log('Componente montado!');
-    if (getJwtToken()) {
-      dispatch(setNavigationItems(ROLE.USER));
+    const token = getJwtToken();
+    if (token) {
+      dispatch(setNavigationItems(token.rol));
     } else {
       dispatch(setNavigationItems(ROLE.NOT_LOGGED));
     }

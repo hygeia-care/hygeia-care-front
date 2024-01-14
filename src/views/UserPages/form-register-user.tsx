@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import UserFormUI from '../../components/User/user-form';
 import { ROLE } from '../../models/user';
-import { httpService } from '../../services/httpService';
+import  httpService  from '../../services/httpService';
 import { isNotEmpty, isValidEmail, isValidPassword } from './validation';
 
 const RegisterUserForm = () => {
@@ -72,7 +72,7 @@ const RegisterUserForm = () => {
       };
 
       try {
-        const response = await httpService.post<any>(
+        const response = await httpService().post<any>(
           'auth/users',
           JSON.stringify(registerUser)
         );
