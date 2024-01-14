@@ -44,7 +44,11 @@ const AppRouter = () => {
         }
       />
       <Route path="/appointments" element={<MyAppointments />} />
-      <Route path="/schedulers" element={<Schedulers />} />
+      <Route path="/schedulers" element={
+          <ProtectedRoute>
+            <Schedulers />
+          </ProtectedRoute>
+        } />
       {/* ... otras rutas */}
       <Route path="*" element={<NotFoundPage />} />{' '}
       {/* Ruta por defecto en la raíz*/}

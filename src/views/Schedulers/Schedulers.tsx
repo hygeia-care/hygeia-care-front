@@ -5,8 +5,10 @@ import 'primeicons/primeicons.css';
 import './Schedulers.css';
 import { Button } from 'primereact/button';
 import { Link } from 'react-router-dom';
-import UserProfile from '../UserPages/UserProfile';
 import axios from 'axios';
+import { getJwtToken } from '../../services/jwtService';
+import httpService from '../../services/httpService';
+import { User } from '../../models/user';
 
 interface Scheduler {
     id: string;
@@ -79,7 +81,7 @@ interface Scheduler {
       setAsunto(e.target.value);
     };
 
-    const handleCreateAppointment = () => {
+    const handleCreateAppointment = async () => {
         // Lógica para crear una cita
         if (!selectedScheduler) {
           alert('Debe elegir una cita disponible.');
@@ -88,6 +90,10 @@ interface Scheduler {
           alert('El asunto no puede estar vacío.');
           return;
         }
+        const token = getJwtToken();
+
+        const datosUser = await httpService().get<User>(`auth/users/${token?.id}`);
+        console.log(datosUser.data.nombre + " " + datosUser.data.apellidos + " id:" + datosUser.data._id);
         console.log('Crear cita');
         console.log(selectedScheduler)
         console.log(asunto)
