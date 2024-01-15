@@ -10,7 +10,7 @@ function getMenu(role: ROLE): MenuItem[] {
       {
         label: 'All appointments',
         icon: PrimeIcons.CALENDAR,
-        url: '/login',
+        url: '/appointments',
       },
       {
         label: 'All patients',
@@ -34,7 +34,7 @@ function getMenu(role: ROLE): MenuItem[] {
       {
         label: 'My appointments',
         icon: PrimeIcons.CALENDAR,
-        url: '/login',
+        url: '/appointments',
       },
       {
         label: 'My data',
