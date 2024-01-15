@@ -93,38 +93,47 @@ const MyAppointments = () => {
 
 
   const handleDeleteAppointment = (id: string, date: string, idPatient: string) => {
-    const formattedDate = parse(date, 'dd/MM/yyyy HH:mm', new Date()).toISOString();
+    // Mostrar el cuadro de diálogo de confirmación
+    const isConfirmed = window.confirm(`¿Estás seguro de eliminar la cita programada para ${formatDateTime(date)}?`);
   
-    axios.delete(`http://localhost:3335/api/v1/appointments/date/${formattedDate}/patient/${idPatient}`)
-      .then(response => {
-        if (response.status === 200) {
-          setAppointmentsData(appointmentsData.filter(appointment => appointment.id !== id));
-          setNoAppointments(appointmentsData.length === 1);
+    // Si el usuario confirma la eliminación, proceder con la solicitud DELETE
+    if (isConfirmed) {
+      const formattedDate = parse(date, 'dd/MM/yyyy HH:mm', new Date()).toISOString();
   
-          if (appointmentsData.length > 1) {
-            axios.get(`http://localhost:3335/api/v1/appointments/patients/${userId}`)
-              .then(response => {
-                const updatedAppointments = response.data.map((appointment: Appointment) => ({
-                  ...appointment,
-                  date: formatDateTime(appointment.date),
-                  doctor: `${appointment.nameDoctor} ${appointment.lastnameDoctor}`,
-                }));
+      axios
+        .delete(`http://localhost:3335/api/v1/appointments/date/${formattedDate}/patient/${idPatient}`)
+        .then(response => {
+          if (response.status === 200) {
+            setAppointmentsData(appointmentsData.filter(appointment => appointment.id !== id));
+            setNoAppointments(appointmentsData.length === 1);
   
-                setAppointmentsData(updatedAppointments);
-                setNoAppointments(updatedAppointments.length === 0);
-              })
-              .catch(error => {
-                console.error('Error al obtener citas después de eliminar:', error);
-              });
+            if (appointmentsData.length > 1) {
+              axios
+                .get(`http://localhost:3335/api/v1/appointments/patients/${userId}`)
+                .then(response => {
+                  const updatedAppointments = response.data.map((appointment: Appointment) => ({
+                    ...appointment,
+                    date: formatDateTime(appointment.date),
+                    doctor: `${appointment.nameDoctor} ${appointment.lastnameDoctor}`,
+                  }));
+  
+                  setAppointmentsData(updatedAppointments);
+                  setNoAppointments(updatedAppointments.length === 0);
+                })
+                .catch(error => {
+                  console.error('Error al obtener citas después de eliminar:', error);
+                });
+            }
+          } else {
+            console.error('Error al eliminar la cita:', response.data);
           }
-        } else {
-          console.error('Error al eliminar la cita:', response.data);
-        }
-      })
-      .catch(error => {
-        console.error('Error al eliminar la cita:', error);
-      });
+        })
+        .catch(error => {
+          console.error('Error al eliminar la cita:', error);
+        });
+    }
   };
+  
   
   const deleteButtonTemplate = (rowData: Appointment) => (
     <Button label="Eliminar" icon="pi pi-trash" className="p-button-danger" onClick={() => handleDeleteAppointment(rowData.id, rowData.date, rowData.idPatient)} />
