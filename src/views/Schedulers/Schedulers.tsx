@@ -79,7 +79,7 @@ const Schedulers: React.FC = () => {
     };
 
     const handleCreateAppointment = async () => {
-        // Lógica para crear una cita
+        // Lógica para crear una citaaaaa
         if (!selectedScheduler) {
             alert('Debe elegir una cita disponible.');
             return;
