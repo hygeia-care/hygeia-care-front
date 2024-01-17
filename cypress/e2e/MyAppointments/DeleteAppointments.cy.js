@@ -14,6 +14,13 @@ describe('Pruebas para eliminar Appointment', () => {
 
     cy.get('.p-datatable-tbody').children().its('length').then((size) => {
       if (size > 0) {
+
+        // Recargar la página para reflejar los cambios
+        cy.reload();
+
+        // Esperar que la página se recargue completamente
+        cy.wait(2000);
+        
         cy.get('button .pi-trash').first().click();
 
         // Confirmar la eliminación en una ventana de diálogo
