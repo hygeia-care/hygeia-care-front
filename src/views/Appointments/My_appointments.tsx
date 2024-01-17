@@ -64,7 +64,7 @@ const MyAppointments = () => {
           }));
           setAppointmentsData(formattedAppointments);
           setNoAppointments(formattedAppointments.length === 0);
-        } catch (error: any) { // Tipar explícitamente 'error' como 'any'
+        } catch (error: any) { 
           console.error('Error al obtener citas:', error);
         
           if (error.response && error.response.status === 404) {
@@ -165,7 +165,7 @@ const MyAppointments = () => {
         </div>
         <div className="new-appointment">
           <Link to="/schedulers">
-            <Button label="Crear Nueva Cita" className="p-button custom-botton" />
+            <Button label="Pedir Cita" className="p-button custom-botton" />
           </Link>
         </div>
       </div>
