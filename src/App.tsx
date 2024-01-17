@@ -10,11 +10,13 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import React from 'react';
 import AppRouter from './AppRouter';
+import GlobalSpinner from './components/Spinner/GlobalSpinner';
 import TopNav from './components/TopNav/TopNav';
 
 export default function App() {
   return (
     <div className="App">
+      <GlobalSpinner />
       <TopNav />
       <div className="content">
         <AppRouter />

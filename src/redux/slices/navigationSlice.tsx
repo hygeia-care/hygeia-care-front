@@ -1,11 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { MenuItem } from 'primereact/menuitem';
 import { PrimeIcons } from 'primereact/api';
-export enum ROLE {
-  ADMIN,
-  USER,
-  NOT_LOGGED,
-}
+import { MenuItem } from 'primereact/menuitem';
+import { ROLE } from '../../models/user';
+import { clearJwtToken } from '../../services/jwtService';
 
 function getMenu(role: ROLE): MenuItem[] {
   if (role === ROLE.ADMIN) {
@@ -53,7 +50,7 @@ function getMenu(role: ROLE): MenuItem[] {
         label: 'Logout',
         icon: PrimeIcons.SIGN_OUT,
         url: '/',
-        command: () => localStorage.clear()
+        command: () => clearJwtToken(),
       },
     ];
   }
