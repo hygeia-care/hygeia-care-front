@@ -14,7 +14,7 @@ describe('Pruebas para eliminar Appointment', () => {
 
     cy.get('.p-datatable-tbody').children().its('length').then((size) => {
       if (size > 0) {
-        cy.get('.p-button-danger[data-pc-name="button"][data-pc-section="root"]').first().click();
+        cy.get('button .pi-trash').first().click();
 
         // Confirmar la eliminación en una ventana de diálogo
         cy.window().then(win => {
