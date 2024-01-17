@@ -1,4 +1,5 @@
-describe('Pruebas para MyAppointments', () => {
+
+describe('Pruebas para eliminar Appointment', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000');
     cy.login();
@@ -8,6 +9,7 @@ describe('Pruebas para MyAppointments', () => {
   it('Comprobar que estamos en mis citas', () => {
     cy.get('h1').should('contain', 'MIS CITAS');
   });
+
 
   it('Eliminar una cita si hay citas programadas', () => {
   
@@ -20,3 +22,4 @@ describe('Pruebas para MyAppointments', () => {
   });
   
 });
+
