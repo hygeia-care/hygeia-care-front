@@ -22,10 +22,10 @@ const httpService = (port: number = 3000) => {
       const token = getRawJwtToken();
       if (token) {
         config.headers['x-auth-token'] = `${token}`;
-        config.headers[
-          'Authorization'
-        ] = `Bearer 04f9237d-646e-4e0d-90d2-504b1f7dcbc0`;
-      }
+      } 
+      config.headers[
+        'Authorization'
+      ] = `Bearer 04f9237d-646e-4e0d-90d2-504b1f7dcbc0`;
       return config;
     },
     (error) => {
