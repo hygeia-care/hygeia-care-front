@@ -1,21 +1,22 @@
 // EditUserForm.tsx
 
-import React, { useState } from 'react';
-import Modal from 'react-modal';
-import { useNavigate } from 'react-router-dom';
-import UserFormUI from '../../components/User/user-form';
-import { ROLE } from '../../models/user';
-import { httpService } from '../../services/httpService';
-import { isNotEmpty, isValidEmail, isValidPassword } from './validation';
+import React, { useState } from "react";
+import Modal from "react-modal";
+import { useNavigate } from "react-router-dom";
+import UserFormUI from "../../components/User/user-form";
+import { ROLE } from "../../models/user";
+import httpService from "../../services/httpService";
+import { isNotEmpty, isValidEmail, isValidPassword } from "./validation";
+import "./UserProfile.css";
 
 const RegisterUserForm = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [surnames, setSurnames] = useState('');
-  const [email, setEmail] = useState('');
-  const [companiaSanitaria, setCompaniaSanitaria] = useState('');
-  const [tarjetaSanitaria, setTarjetaSanitaria] = useState('');
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [surnames, setSurnames] = useState("");
+  const [email, setEmail] = useState("");
+  const [companiaSanitaria, setCompaniaSanitaria] = useState("");
+  const [tarjetaSanitaria, setTarjetaSanitaria] = useState("");
   const [errors, setErrors] = useState({
     name: false,
     surnames: false,
@@ -28,7 +29,7 @@ const RegisterUserForm = () => {
 
   const closeSuccessMessage = () => {
     setRegistrationSuccess(false);
-    navigate('/login');
+    navigate("/login");
   };
 
   const handleEditUser = async (e: any) => {
@@ -72,45 +73,61 @@ const RegisterUserForm = () => {
       };
 
       try {
-        const response = await httpService.post<any>(
-          'auth/users',
+        const response = await httpService().post<any>(
+          "auth/users",
           JSON.stringify(registerUser)
         );
-        console.log(response.status);
+        console.log(response);
 
         if (response.status === 201) {
-          console.log('Registro exitoso');
+          console.log("Registro exitoso");
           setRegistrationSuccess(true);
           console.log(isRegistrationSuccess);
-          console.log('Usuario registrado');
+          console.log("Usuario registrado");
         } else if (response.status === 409) {
           setErrors({ ...errors, email: true });
           console.log(
-            'Se ha producido un conflicto a la hora de enviar el formulario'
+            "Se ha producido un conflicto a la hora de enviar el formulario"
           );
         }
         console.log(registerUser);
       } catch (error) {
-        console.log('No es posible registrar el usuario' + error);
-        console.log(errors);
+        console.log("No es posible registrar el usuario: " + error);
+        console.log();
       }
     } else {
-      console.log('Los campos no se han rellenado correctamente');
+      console.log("Los campos no se han rellenado correctamente");
     }
   };
 
   return (
     <div>
-      <Modal
-        isOpen={isRegistrationSuccess}
-        onRequestClose={closeSuccessMessage}
-        contentLabel="Registro Exitoso"
-      >
-        <div>
-          <p>¡Registro exitoso! Se ha registrado el usuario correctamente.</p>
-          <button onClick={closeSuccessMessage}>Cerrar</button>
-        </div>
-      </Modal>
+      <div>
+        <Modal
+          isOpen={isRegistrationSuccess}
+          onRequestClose={closeSuccessMessage}
+          className="modal-dialog modal-dialog-centered"
+          contentLabel="Registro Exitoso"
+        >
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Registro Exitoso</h5>
+            </div>
+            <div className="modal-body">
+              <p>Se ha registrado el usuario correctamente.</p>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={closeSuccessMessage}
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </Modal>
+      </div>
       <UserFormUI
         name={name}
         surnames={surnames}

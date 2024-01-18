@@ -8,7 +8,7 @@ import 'primereact/resources/primereact.min.css'; // Núcleo de PrimeReact
 import 'primereact/resources/themes/saga-blue/theme.css'; // Tema
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { httpService } from '../../services/httpService';
+import  httpService from '../../services/httpService';
 import { setJwtToken } from '../../services/jwtService';
 
 const LoginPage = () => {
@@ -26,7 +26,7 @@ const LoginPage = () => {
       password: password,
     };
     try {
-      const response = await httpService.post<{ token: string }>(
+      const response = await httpService().post<{ token: string }>(
         'auth/users/login',
         JSON.stringify(userLogin)
       );

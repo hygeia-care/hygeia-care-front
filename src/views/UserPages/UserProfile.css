@@ -61,3 +61,30 @@
   justify-content: flex-end;
   gap: 1rem;
 }
+
+.modal-dialog {
+  width: max-content;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.ReactModal__Overlay{
+  display: flex;
+  position: fixed;
+  inset: 0px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  padding: 15%;
+  .modal-content {
+    text-align: center;
+    padding: 1%;
+    border: 3px solid #4e8f30;
+    margin: auto;
+    border-radius: 10%;
+    background-color: rgba(112, 230, 108, 0.75);
+
+  }
+}
