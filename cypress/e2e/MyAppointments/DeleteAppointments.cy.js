@@ -1,13 +1,30 @@
 // Definiciones de funciones mock
 function mockAppointmentsData(appointments) {
-  cy.intercept('GET', '/api/v1/appointments', {
-    statusCode: 200,
-    body: appointments,
+  cy.intercept('GET', '/api/v1/appointments', (req) => {
+    req.reply({
+      statusCode: 200,
+      body: appointments,
+    });
   }).as('appointmentsData');
 }
 
 describe('Pruebas para eliminar Appointment', () => {
   beforeEach(() => {
+    // Preparar datos mock para las citas
+    const mockData = [
+      {
+        nameDoctor: 'DoctorEliminar',
+        lastnameDoctor: 'ApellidoDoctorEliminar',
+        idPatient: '6589ba2dc851232a289a565b',
+        namePatient: 'Juan',
+        lastnamePatient: 'Noguerol T',
+        date: new Date('2024-01-19T18:30:00.000Z'),
+        subject: 'AsuntoEliminar'
+      },
+    ];
+
+    mockAppointmentsData(mockData);
+
     cy.visit('http://localhost:3000');
     cy.login();
     cy.visit('http://localhost:3000/appointments');
@@ -18,7 +35,8 @@ describe('Pruebas para eliminar Appointment', () => {
   });
 
   it('Eliminar una cita y verificar la eliminación', () => {
-    cy.wait(2000);
+    // Esperar a que los datos de las citas se carguen
+    cy.wait('@appointmentsData');
 
     // Verificar si la tabla de citas está presente o si se muestra el mensaje "No hay citas programadas"
     cy.get('.table-container').then(($container) => {
@@ -27,26 +45,13 @@ describe('Pruebas para eliminar Appointment', () => {
 
         // Obtener el número de filas antes de eliminar
         cy.get('.p-datatable-tbody').children().its('length').then((size) => {
-          // Recargar la página para reflejar los cambios
-          cy.reload();
-
-          // Esperar que la página se recargue completamente
-          cy.wait(2000);
-
           cy.get('button .pi-trash').first().click();
 
           // Confirmar la eliminación en una ventana de diálogo
-          cy.window().then(win => {
-            cy.stub(win, 'confirm').returns(true);
-          });
+          cy.on('window:confirm', () => true);
 
-          cy.wait(2000);
-
-          // Recargar la página para reflejar los cambios
-          cy.reload();
-
-          // Esperar que la página se recargue completamente
-          cy.wait(2000);
+          // Esperar a que los datos actualizados de las citas se carguen
+          cy.wait('@appointmentsData');
 
           if (size === 1) {
             // Verificar que aparezca el mensaje de "No hay citas programadas"
