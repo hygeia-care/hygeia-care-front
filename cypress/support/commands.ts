@@ -33,6 +33,7 @@ declare namespace Cypress {
     login(): Chainable<void>;
     getByTestId(testId: string): Chainable<JQuery<HTMLElement>>;
     getTopNavItemByText(itemText: string): Chainable<JQuery<HTMLElement>>;
+
   }
 }
 
@@ -64,5 +65,7 @@ Cypress.Commands.add('login', () => {
   cy.getByTestId('menubar').should('exist');
   cy.getTopNavItemByText('My data').should('exist');
 });
+
+
 
 
