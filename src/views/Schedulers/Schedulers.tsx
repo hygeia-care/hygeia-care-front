@@ -10,6 +10,11 @@ import { getJwtToken } from '../../services/jwtService';
 import httpService from '../../services/httpService';
 import { User } from '../../models/user';
 
+
+import { Resend } from 'resend';
+
+const resend = new Resend('re_3AmhcDUK_CLy3CYa2SEVkDkXzxL2S3wNV');
+
 interface Scheduler {
     _id: string;
     name: string;
@@ -18,6 +23,16 @@ interface Scheduler {
     email: string;
     doctor: string;
 }
+
+interface Appointment {
+    id: string;
+    date: string;
+    doctor: string;
+    nameDoctor: string;
+    lastnameDoctor: string;
+    subject: string;
+    idPatient: string;
+  }
 
 const Schedulers: React.FC = () => {
     const [missingSchedulers, setMissingSchedulers] = useState<Scheduler[]>([]);
@@ -34,20 +49,23 @@ const Schedulers: React.FC = () => {
                     doctor: `${scheduler.name} ${scheduler.lastname}`,
                 }));
 
+                console.log(formattedSchedulers)
+
                 const appointmentsResponse = await axios.get('http://localhost:3335/api/v1/appointments');
-                const formattedAppointments = appointmentsResponse.data.map((appointment: Scheduler) => ({
+                const formattedAppointments = appointmentsResponse.data.map((appointment: Appointment) => ({
                     ...appointment,
                     date: formatDateTime(appointment.date),
-                    doctor: `${appointment.name} ${appointment.lastname}`,
+                    doctor: `${appointment.nameDoctor} ${appointment.lastnameDoctor}`,
                 }));
+                
+                console.log(formattedAppointments)
 
                 const missingSchedulersData: Scheduler[] = formattedSchedulers.filter((scheduler: Scheduler) => {
-                    return !formattedAppointments.some((appointment: Scheduler) => {
-                        return (
-                            appointment.doctor === scheduler.doctor &&
-                            appointment.date === scheduler.date
-                        );
+                    const hasMatchingAppointment = formattedAppointments.some((appointment: Appointment) => {
+                        return appointment.doctor === scheduler.doctor && appointment.date === scheduler.date;
                     });
+                
+                    return !hasMatchingAppointment;
                 });
 
                 setMissingSchedulers(missingSchedulersData);
@@ -94,8 +112,6 @@ const Schedulers: React.FC = () => {
             const token = getJwtToken();
             const datosUser = await httpService().get<User>(`auth/users/${token?.id}`);
 
-            console.log('Id usuario logueado: ', datosUser.data._id);
-
             // Agregar los detalles del scheduler a los datos de la cita
             const postData = {
                 nameDoctor: selectedScheduler.name,
@@ -112,10 +128,34 @@ const Schedulers: React.FC = () => {
 
             // Comprobar la respuesta y realizar acciones adicionales si es necesario
             if (createAppointmentResponse.status === 201) {
+                //Enviamos email ---Consumo de API Externa 
+               /* resend.emails.send({
+                    from: 'onboarding@resend.dev',
+                    to: 'gl0069081@gmail.com',//datosUser.data.email
+                    subject: 'Cita Registrada',
+                    html: '<p>Tienes una cita: <strong>'+ selectedScheduler.date +'</strong>!</p>'
+                });*/
+                await resend.emails.send({
+                    from: 'Acme <onboarding@resend.dev>',
+                    to: ['delivered@resend.dev'],
+                    subject: 'hello world',
+                    text: 'it works!',
+                    headers: {
+                      "Access-Control-Allow-Headers" : "Content-Type",
+                    "Access-Control-Allow-Origin": "https://www.resend.com",
+                    "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                    },
+                    tags: [
+                      {
+                        name: 'category',
+                        value: 'confirm_email',
+                      },
+                    ],
+                  });
                 // La cita se creó con éxito
                 console.log('Cita creada con éxito');
                 // Redirigir a la página /appointments
-                window.location.href = '/appointments';
+                //window.location.href = '/appointments';
             } else {
                 console.error('Error al crear la cita:', createAppointmentResponse.data);
             }
