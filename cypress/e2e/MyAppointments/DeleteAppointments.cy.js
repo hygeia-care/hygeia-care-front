@@ -35,7 +35,7 @@ describe('Pruebas para Appointment Management', () => {
 
 function mockAppointmentsData() {
   cy.fixture('appointmentData.json').then((response) => {
-    cy.intercept('GET', '/api/v1/appointments/patients/*', (req) => {
+    cy.intercept('GET', '/api/v1/appointments/patients/6589ba2dc851232a289a565b', (req) => {
       // Registro de la solicitud
       console.log('Solicitud GET realizada:', req);
 
