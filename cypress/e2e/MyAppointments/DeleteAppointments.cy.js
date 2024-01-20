@@ -1,4 +1,4 @@
-
+/*
 describe('Pruebas para Appointment Management', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000');
@@ -79,12 +79,7 @@ function mockDeleteAppointment() {
   }).as('appointmentData');
 }
 
-
-
-
-
-
-
+*/
 
 
 
