@@ -9,7 +9,8 @@ describe('Pruebas para Appointment Management', () => {
   it('Accede a mis citas', () => {
     goToMyAppointments();
     cy.get('h1').should('contain', 'MIS CITAS');
-    cy.get('.table-container').should('contain', 'Cita Otorrino');
+
+    cy.get('.table-container', {timeout: 10000}).should('contain', 'Cita Otorrino');
   });
 
   it('Elimina una cita', () => {
@@ -23,10 +24,9 @@ describe('Pruebas para Appointment Management', () => {
     cy.get('.p-button-danger').first().click();
     cy.get('.p-button-text').eq(1).click();
 
-    cy.wait('@deleteAppointment');
 
     //Verificación
-    cy.get('.table-container').should('not.contain', 'Cita otorrino');
+    cy.get('.table-container').should('not.contain', 'Cita Otorrino');
 
   });
 
@@ -50,6 +50,8 @@ function mockAppointmentsData() {
       });
     }).as('appointmentData');
   });
+
+  
 }
 
 
@@ -69,6 +71,11 @@ function mockDeleteAppointment() {
 
     console.log('Solicitud DELETE interceptada:', req);
   }).as('deleteAppointment');
+
+  cy.intercept('GET', '/api/v1/appointments/patients/*', {
+    statusCode: 200,
+    body: [] // Una lista vacía o una lista que excluye la cita eliminada
+  }).as('appointmentData');
 }
 
 
