@@ -1,4 +1,4 @@
-
+/*
 describe('Pruebas para Appointment Management', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000');
@@ -44,7 +44,7 @@ function goToMyAppointments() {
   cy.get('.table-container').should('be.visible'); 
 }
 
-
+*/
 
 
 

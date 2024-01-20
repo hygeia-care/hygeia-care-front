@@ -33,7 +33,6 @@ declare namespace Cypress {
     login(): Chainable<void>;
     getByTestId(testId: string): Chainable<JQuery<HTMLElement>>;
     getTopNavItemByText(itemText: string): Chainable<JQuery<HTMLElement>>;
-
   }
 }
 
