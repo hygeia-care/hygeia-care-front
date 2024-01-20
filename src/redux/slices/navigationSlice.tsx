@@ -15,7 +15,7 @@ function getMenu(role: ROLE): MenuItem[] {
       {
         label: 'All patients',
         icon: PrimeIcons.USERS,
-        url: '/createAccount',
+        url: '/profile',
       },
       {
         label: 'All bills',
@@ -25,7 +25,8 @@ function getMenu(role: ROLE): MenuItem[] {
       {
         label: 'Logout',
         icon: PrimeIcons.SIGN_OUT,
-        url: '/faq',
+        url: '/',
+        command: () => clearJwtToken(),
       },
     ];
   }

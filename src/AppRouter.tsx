@@ -42,6 +42,14 @@ const AppRouter = () => {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/profile/:userId"
+        element={
+          <ProtectedRoute>
+            <UserProfile />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/appointments" element={<MyAppointments />} />
       {/* ... otras rutas */}
       <Route path="*" element={<NotFoundPage />} />{' '}
