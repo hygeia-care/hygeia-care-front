@@ -13,8 +13,10 @@ describe('Pruebas para Appointment Management', () => {
 
   it('Elimina una cita', () => {
     
-    mockDeleteAppointment()
     goToMyAppointments();
+
+    mockDeleteAppointment()
+
     cy.get('button .pi-trash').first().click({ force: true });
 
     cy.window().then(win => {
@@ -52,7 +54,7 @@ function mockAppointmentsData() {
 function goToMyAppointments() {
   mockAppointmentsData();
   cy.getTopNavItemByText('My appointments').click();
-  cy.wait('@appointmentData'); 
+  //cy.wait('@appointmentData'); 
   cy.get('.table-container').should('be.visible'); 
 }
 
