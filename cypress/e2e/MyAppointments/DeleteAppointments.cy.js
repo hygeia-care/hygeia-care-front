@@ -9,32 +9,34 @@ describe('Pruebas para Appointment Management', () => {
   it('Accede a mis citas', () => {
     goToMyAppointments();
     cy.get('h1').should('contain', 'MIS CITAS');
+    cy.get('.table-container').should('contain', 'Cita Otorrino');
   });
 
   it('Elimina una cita', () => {
     
     goToMyAppointments();
 
+    cy.get('.table-container').should('contain', 'Cita Otorrino');
+    
     mockDeleteAppointment()
 
-    cy.get('button .pi-trash').first().click({ force: true });
+    cy.get('.p-button-danger').first().click();
+    cy.get('.p-button-text').eq(1).click();
 
-    cy.window().then(win => {
-      cy.stub(win, 'confirm').returns(true);
-    });
-  });
+    cy.wait('@deleteAppointment');
 
-  it('Verifica la eliminación', () => {
-    goToMyAppointments();
+    //Verificación
     cy.get('.table-container').should('not.contain', 'Cita otorrino');
+
   });
+
 });
 
 
 function mockAppointmentsData() {
   cy.fixture('appointmentData.json').then((response) => {
     cy.intercept('GET', '/api/v1/appointments/patients/*', (req) => {
-      // Registro de la solicitudddddd
+      // Registro de la solicitud
       console.log('Solicitud GET realizada:', req);
 
       req.reply({
@@ -54,12 +56,11 @@ function mockAppointmentsData() {
 function goToMyAppointments() {
   mockAppointmentsData();
   cy.getTopNavItemByText('My appointments').click();
-  //cy.wait('@appointmentData'); 
   cy.get('.table-container').should('be.visible'); 
 }
 
 function mockDeleteAppointment() {
-  cy.intercept('DELETE', '/api/v1/appointments/date/*', (req) => {
+  cy.intercept('DELETE', '/api/v1/appointments/date/2023-12-01T14:00:00.000Z/patient/6589ba2dc851232a289a565b', (req) => {
 
     req.reply({
       statusCode: 200, 

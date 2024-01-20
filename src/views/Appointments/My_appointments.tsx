@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { SortOrder } from 'primereact/datatable';
+import { SortOrder } from 'primereact/api'; // Importación correcta aquí
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -13,6 +13,8 @@ import { parse, format } from 'date-fns';
 import { getJwtToken } from '../../services/jwtService';
 import httpService from '../../services/httpService';
 import { User } from '../../models/user';
+import { Dialog } from 'primereact/dialog';
+
 
 interface Appointment {
   id: string;
@@ -31,6 +33,8 @@ const MyAppointments = () => {
   const [sortField, setSortField] = useState<string>('date');
   const [sortOrder, setSortOrder] = useState<SortOrder>(1);
   const [noAppointments, setNoAppointments] = useState(false);
+  const [isDialogVisible, setIsDialogVisible] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -91,52 +95,60 @@ const MyAppointments = () => {
     setSortOrder(e.sortOrder);
   };
 
+  const handleDeleteAppointment = (appointment: Appointment) => {
+    setSelectedAppointment(appointment);
+    setIsDialogVisible(true);
+  };
 
-  const handleDeleteAppointment = (id: string, date: string, idPatient: string) => {
-    // Mostrar el cuadro de diálogo de confirmación
-    const isConfirmed = window.confirm(`¿Estás seguro de eliminar la cita programada para ${formatDateTime(date)}?`);
-  
-    // Si el usuario confirma la eliminación, proceder con la solicitud DELETE
-    if (isConfirmed) {
+  const deleteAppointmentConfirmed = () => {
+    if (selectedAppointment) {
+      const { id, date, idPatient } = selectedAppointment;
       const formattedDate = parse(date, 'dd/MM/yyyy HH:mm', new Date()).toISOString();
   
-      axios
-        .delete(`http://localhost:3335/api/v1/appointments/date/${formattedDate}/patient/${idPatient}`)
+      axios.delete(`http://localhost:3335/api/v1/appointments/date/${formattedDate}/patient/${idPatient}`)
         .then(response => {
           if (response.status === 200) {
-            setAppointmentsData(appointmentsData.filter(appointment => appointment.id !== id));
-            setNoAppointments(appointmentsData.length === 1);
+            // Eliminación exitosa, ahora obtén las citas actualizadas
+            axios.get(`http://localhost:3335/api/v1/appointments/patients/${userId}`)
+              .then(response => {
+                const updatedAppointments = response.data.map((appointment: Appointment) => ({
+                  ...appointment,
+                  date: formatDateTime(appointment.date),
+                  doctor: `${appointment.nameDoctor} ${appointment.lastnameDoctor}`,
+                }));
   
-            if (appointmentsData.length > 1) {
-              axios
-                .get(`http://localhost:3335/api/v1/appointments/patients/${userId}`)
-                .then(response => {
-                  const updatedAppointments = response.data.map((appointment: Appointment) => ({
-                    ...appointment,
-                    date: formatDateTime(appointment.date),
-                    doctor: `${appointment.nameDoctor} ${appointment.lastnameDoctor}`,
-                  }));
-  
-                  setAppointmentsData(updatedAppointments);
-                  setNoAppointments(updatedAppointments.length === 0);
-                })
-                .catch(error => {
-                  console.error('Error al obtener citas después de eliminar:', error);
-                });
-            }
+                setAppointmentsData(updatedAppointments);
+                setNoAppointments(updatedAppointments.length === 0); // Actualiza según si hay citas o no
+              })
+              .catch(error => {
+                console.error('Error al obtener citas después de eliminar:', error);
+                setNoAppointments(true); // Asume que no hay citas si hay un error
+              });
           } else {
             console.error('Error al eliminar la cita:', response.data);
           }
+          setIsDialogVisible(false);
         })
         .catch(error => {
           console.error('Error al eliminar la cita:', error);
+          setIsDialogVisible(false);
         });
     }
   };
   
   
+  
+  
+  const dialogFooter = (
+    <div>
+      <Button label="Cancelar" icon="pi pi-times" onClick={() => setIsDialogVisible(false)} className="p-button-text" />
+      <Button label="Confirmar" icon="pi pi-check" onClick={deleteAppointmentConfirmed} className="p-button-text" />
+    </div>
+  );
+
+  
   const deleteButtonTemplate = (rowData: Appointment) => (
-    <Button label="Eliminar" icon="pi pi-trash" className="p-button-danger" onClick={() => handleDeleteAppointment(rowData.id, rowData.date, rowData.idPatient)} />
+    <Button label="Eliminar" icon="pi pi-trash" className="p-button-danger" onClick={() => handleDeleteAppointment(rowData)} />
   );
 
   return (
@@ -169,6 +181,16 @@ const MyAppointments = () => {
           </Link>
         </div>
       </div>
+
+      <Dialog 
+        visible={isDialogVisible} 
+        onHide={() => setIsDialogVisible(false)} 
+        header="Confirmar Eliminación" 
+        modal 
+        footer={dialogFooter}>
+          <p>¿Estás seguro de que deseas eliminar la cita programada para {selectedAppointment?.date}?</p>
+      </Dialog>
+
     </div>
   );
 };
