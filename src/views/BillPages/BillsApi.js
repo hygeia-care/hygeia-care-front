@@ -48,24 +48,23 @@ class BillsApi{
         return response.json();
     }
 
-    static async updateBill(billId, updatedBill) {
+    static async updateBill(updatedBill, billId) {
         const headers = this.requestHeaders();
     
-        const request = new Request("http://localhost:3337/api/v1/bills/" +billId, {
+        const request = new Request("http://localhost:3337/api/v1/bills/", {
             method: "PUT",  // Usa el método PUT para actualizar
-            headers: headers,
-            body: JSON.stringify(updatedBill),
-        });
-    
-        const response = await fetch(request);
-    
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            //body: JSON.stringify(updatedBill),
+            body: JSON.stringify({ ...updatedBill, _id: billId }), // Include the ID in the body
+        });    
+        const response = await fetch(request);    
         if (!response.ok) {
             throw new Error("BillsApi:updateBill - Response not valid " + response.status);
-        }
-    
+        }    
         return response.json();
     }
-
 
     static async deleteBill(id) {
         const headers = this.requestHeaders();
@@ -81,12 +80,8 @@ class BillsApi{
     
         if (!response.ok) {
             throw new Error("BillsApi:deleteBill - Response not valid " + response.status);
-        }
-    
+        }    
         return response.json();
-    }
-    
-    
+    }      
 }
-
 export default BillsApi;

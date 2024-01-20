@@ -3,8 +3,8 @@ import { useState } from "react";
 function EditBill(props) {
  
     const [name, setName] = useState(props.bill.name);
-    const [description, setDescription] = useState(props.bill.name);
-    const [total, setTotal] = useState(props.bill.totla);
+    const [description, setDescription] = useState(props.bill.description);
+    const [total, setTotal] = useState(props.bill.total);
     const [services, setServices] = useState(props.bill.services);
     const [issueDate, setIssueDate] = useState(props.bill.issueDate);
     const [patient, setPatient] = useState(props.bill.patient);
@@ -21,7 +21,8 @@ function EditBill(props) {
             <td><input className="form-control" name="patient" value={patient} onChange={(event) => setPatient(event.target.value)}/></td>
             <td><input className="form-control" name="appointment" value={appointment} onChange={(event) => setAppointment(event.target.value)}/></td>
             <td>
-                <button className="btn btn-primary" onClick={() => props.onSave({name: name, description:description})}>Save</button>
+                <button className="btn btn-primary" onClick={() => props.onSave({name: name, description:description, total:total, 
+                                                                                services:services,issueDate:issueDate, patient:patient, appointment:appointment })}>Save</button>
                 <button className="btn btn-primary" onClick={() => props.onDelete(props.bill)}>Delete</button>
             </td>
         </tr>
