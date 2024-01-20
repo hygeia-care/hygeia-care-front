@@ -1,10 +1,9 @@
-{
-  "nameDoctor": "pepe",
-  "lastnameDoctor": "perez jaldón",
-  "idPatient": "6589ba2dc851232a289a565b",
-  "namePatient": "Juan",
-  "lastnamePatient": "Noguerol T",
-  "date": "2023-12-01T14:00:00+00:00",
-  "subject": "Asunto de la cita"
+[
+  {
+    "date": "2023-12-01T14:00:00+00:00",
+    "nameDoctor": "antonio",
+    "lastnameDoctor": "mangas romero",
+    "subject": "Cita Otorrino",
+    "idPatient": "6589ba2dc851232a289a565b"
   }
-  
+]
