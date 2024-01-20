@@ -8,7 +8,6 @@ describe('Pruebas para Appointment Management', () => {
 
   it('Accede a mis citas', () => {
     goToMyAppointments();
-    
     cy.get('h1').should('contain', 'MIS CITAS');
   });
 
@@ -33,7 +32,7 @@ describe('Pruebas para Appointment Management', () => {
 function mockAppointmentsData() {
   cy.fixture('appointmentData.json').then((response) => {
     cy.intercept('GET', '/api/v1/appointments/patients/*', (req) => {
-      // Registro de la solicitud
+      // Registro de la solicitudddddd
       console.log('Solicitud GET realizada:', req);
 
       req.reply({
