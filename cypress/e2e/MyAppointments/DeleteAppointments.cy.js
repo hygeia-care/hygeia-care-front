@@ -9,8 +9,9 @@ describe('Pruebas para Appointment Management', () => {
   it('Accede a mis citas', () => {
     goToMyAppointments();
     cy.get('h1').should('contain', 'MIS CITAS');
-
+    mockAppointmentsData();
     cy.get('.table-container', {timeout: 10000}).should('contain', 'Cita Otorrino');
+
   });
 
   it('Elimina una cita', () => {
