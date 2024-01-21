@@ -20,7 +20,7 @@ function getMenu(role: ROLE): MenuItem[] {
       {
         label: 'All bills',
         icon: PrimeIcons.MONEY_BILL,
-        url: '/pricing',
+        url: '/bills',
       },
       {
         label: 'Logout',
@@ -44,7 +44,7 @@ function getMenu(role: ROLE): MenuItem[] {
       {
         label: 'My bills',
         icon: PrimeIcons.MONEY_BILL,
-        url: '/pricing',
+        url: '/bills',
       },
       {
         label: 'Logout',

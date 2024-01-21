@@ -11,6 +11,8 @@ import HomePage from './views/HomePage/HomePage';
 import LoginPage from './views/LoginPage/LoginPage';
 import NotFoundPage from './views/NotFoundPage/NotFoundPage';
 import UserProfile from './views/UserPages/UserProfile';
+import BillProfile from './views/BillPages/Bills';
+// import AppointmentList from './views/Appointments/My_appointments';
 import UserForm from './views/UserPages/form-register-user';
 
 // ...otros imports de página
@@ -34,6 +36,9 @@ const AppRouter = () => {
       <Route index element={<HomePage />} /> {/* Ruta por defecto en la raíz*/}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<UserForm />} />
+      <Route path="/profile" element={<UserProfile />} />
+      <Route path="/bills" element={<BillProfile />} />
+      {/* <Route path="/appointments" element={<AppointmentList />} /> */}
       <Route
         path="/profile"
         element={
