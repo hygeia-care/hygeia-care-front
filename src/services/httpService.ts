@@ -7,7 +7,7 @@ import {
 } from '../components/Spinner/requestCounter';
 import { getRawJwtToken } from './jwtService';
 
-const httpService = (port: number = 3000) => {
+const httpService = (port: number = 3333) => {
   const http = axios.create({
     baseURL: API_BASE_URL(port.toString()),
     headers: {

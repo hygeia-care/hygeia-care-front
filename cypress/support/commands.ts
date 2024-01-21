@@ -64,3 +64,7 @@ Cypress.Commands.add('login', () => {
   cy.getByTestId('menubar').should('exist');
   cy.getTopNavItemByText('My data').should('exist');
 });
+
+
+
+
