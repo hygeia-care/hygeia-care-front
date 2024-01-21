@@ -12,13 +12,13 @@ describe('Pruebas para AnalysisSummary', () => {
 
   it('muestra datos de análisis en la tabla', () => {
     goToMyData();
-    cy.get('[data-testid="cell-value-0"]').should('contain', '10');
-    cy.get('[data-testid="cell-value-1"]').should('contain', '20');
+    cy.getByTestId('cell-value-0').should('contain', '10');
+    cy.getByTestId('cell-value-1').should('contain', '20');
   });
 
   it('abrir y cerrar el modal de detalles', () => {
     goToMyData();
-    cy.get('[data-testid="cell-action-0"]').within(() => {
+    cy.getByTestId('cell-action-0').within(() => {
       cy.get('button').click();
     });
 
@@ -29,7 +29,7 @@ describe('Pruebas para AnalysisSummary', () => {
 
   it('formato de fecha correcto en la tabla', () => {
     goToMyData();
-    cy.get('[data-testid="cell-measurementDate-0"]')
+    cy.getByTestId('cell-measurementDate-0')
       .invoke('text')
       .should('match', /\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}/);
   });
@@ -44,7 +44,29 @@ function mockUserData() {
   });
 }
 
+function mockAnalysisData() {
+  cy.fixture('analysisMock.json').then((response) => {
+    cy.intercept('GET', '/api/v1/analysis?userId*', {
+      statusCode: 200,
+      body: response,
+    });
+  });
+}
+
+function mockMeasurementData() {
+  cy.fixture('measurementMock.json').then((response) => {
+    cy.intercept('GET', '/api/v1/measurement/*', {
+      statusCode: 200,
+      body: response,
+    });
+  });
+}
+
 function goToMyData() {
   mockUserData();
+  mockAnalysisData();
+  mockMeasurementData();
   cy.getTopNavItemByText('My data').click();
+  cy.get('.p-card-title').contains('Perfil de Usuario');
+  cy.getByTestId('http-spinner').should('not.exist');
 }

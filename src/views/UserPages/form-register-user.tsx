@@ -1,21 +1,22 @@
 // EditUserForm.tsx
 
-import React, { useState } from 'react';
-import Modal from 'react-modal';
-import { useNavigate } from 'react-router-dom';
-import UserFormUI from '../../components/User/user-form';
-import { ROLE } from '../../models/user';
-import  httpService  from '../../services/httpService';
-import { isNotEmpty, isValidEmail, isValidPassword } from './validation';
+import React, { useState } from "react";
+import UserFormUI from "../../components/User/user-form";
+import { ROLE } from "../../models/user";
+import httpService from "../../services/httpService";
+import { isNotEmpty, isValidEmail, isValidPassword } from "./validation";
+import "./UserProfile.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setRegistrationSuccess } from "../../redux/slices/authSlice";
+import { RootState } from "../../redux/store";
 
 const RegisterUserForm = () => {
-  const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [surnames, setSurnames] = useState('');
-  const [email, setEmail] = useState('');
-  const [companiaSanitaria, setCompaniaSanitaria] = useState('');
-  const [tarjetaSanitaria, setTarjetaSanitaria] = useState('');
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [surnames, setSurnames] = useState("");
+  const [email, setEmail] = useState("");
+  const [companiaSanitaria, setCompaniaSanitaria] = useState("");
+  const [tarjetaSanitaria, setTarjetaSanitaria] = useState("");
   const [errors, setErrors] = useState({
     name: false,
     surnames: false,
@@ -24,12 +25,10 @@ const RegisterUserForm = () => {
     companiaSanitaria: false,
     tarjetaSanitaria: false,
   });
-  const [isRegistrationSuccess, setRegistrationSuccess] = useState(false);
-
-  const closeSuccessMessage = () => {
-    setRegistrationSuccess(false);
-    navigate('/login');
-  };
+   
+  const dispatch = useDispatch();
+  const isRegistrationSuccess = useSelector((state: RootState) => state.auth.isRegistrationSuccess);
+  console.log(isRegistrationSuccess);
 
   const handleEditUser = async (e: any) => {
     e.preventDefault();
@@ -43,7 +42,7 @@ const RegisterUserForm = () => {
     const isPasswordValid: boolean = isValidPassword(password);
 
     // Actualizar el estado de los errores
-    const errors = {
+    const errors = {  
       name: !isNameValid,
       surnames: !isSurnamesValid,
       email: !isEmailValid,
@@ -73,45 +72,36 @@ const RegisterUserForm = () => {
 
       try {
         const response = await httpService().post<any>(
-          'auth/users',
+          "auth/users",
           JSON.stringify(registerUser)
         );
-        console.log(response.status);
+        console.log(response);
 
         if (response.status === 201) {
-          console.log('Registro exitoso');
-          setRegistrationSuccess(true);
+          console.log("Registro exitoso");
+          dispatch(setRegistrationSuccess(true));
           console.log(isRegistrationSuccess);
-          console.log('Usuario registrado');
+          console.log("Usuario registrado");
         } else if (response.status === 409) {
           setErrors({ ...errors, email: true });
           console.log(
-            'Se ha producido un conflicto a la hora de enviar el formulario'
+            "Se ha producido un conflicto a la hora de enviar el formulario"
           );
         }
         console.log(registerUser);
       } catch (error) {
-        console.log('No es posible registrar el usuario' + error);
-        console.log(errors);
+        console.log("No es posible registrar el usuario: " + error);
+        console.log();
       }
     } else {
-      console.log('Los campos no se han rellenado correctamente');
+      console.log("Los campos no se han rellenado correctamente");
     }
   };
 
   return (
     <div>
-      <Modal
-        isOpen={isRegistrationSuccess}
-        onRequestClose={closeSuccessMessage}
-        contentLabel="Registro Exitoso"
-      >
-        <div>
-          <p>¡Registro exitoso! Se ha registrado el usuario correctamente.</p>
-          <button onClick={closeSuccessMessage}>Cerrar</button>
-        </div>
-      </Modal>
       <UserFormUI
+        isRegistrationSuccess={isRegistrationSuccess}
         name={name}
         surnames={surnames}
         email={email}
@@ -133,3 +123,4 @@ const RegisterUserForm = () => {
 };
 
 export default RegisterUserForm;
+

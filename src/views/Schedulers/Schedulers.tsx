@@ -4,7 +4,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import './Schedulers.css';
 import { Button } from 'primereact/button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getJwtToken } from '../../services/jwtService';
 import httpService from '../../services/httpService';
@@ -38,7 +38,7 @@ const Schedulers: React.FC = () => {
     const [missingSchedulers, setMissingSchedulers] = useState<Scheduler[]>([]);
     const [selectedScheduler, setSelectedScheduler] = useState<Scheduler | null>(null);
     const [asunto, setAsunto] = useState<string | null>(null);
-
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -49,16 +49,12 @@ const Schedulers: React.FC = () => {
                     doctor: `${scheduler.name} ${scheduler.lastname}`,
                 }));
 
-                console.log(formattedSchedulers)
-
                 const appointmentsResponse = await axios.get('http://localhost:3335/api/v1/appointments');
                 const formattedAppointments = appointmentsResponse.data.map((appointment: Appointment) => ({
                     ...appointment,
                     date: formatDateTime(appointment.date),
                     doctor: `${appointment.nameDoctor} ${appointment.lastnameDoctor}`,
                 }));
-                
-                console.log(formattedAppointments)
 
                 const missingSchedulersData: Scheduler[] = formattedSchedulers.filter((scheduler: Scheduler) => {
                     const hasMatchingAppointment = formattedAppointments.some((appointment: Appointment) => {
@@ -87,7 +83,6 @@ const Schedulers: React.FC = () => {
         const selected = missingSchedulers.find((scheduler) => scheduler.email === selectedEmail);
 
         if (selected) {
-            console.log('Scheduler seleccionado:', selected);
             setSelectedScheduler(selected);
         }
     };
@@ -123,42 +118,25 @@ const Schedulers: React.FC = () => {
                 subject: asunto,
             };
 
+
             // Realizar la solicitud POST a la API de appointments con los datos combinados
             const createAppointmentResponse = await axios.post('http://localhost:3335/api/v1/appointments', postData);
 
             // Comprobar la respuesta y realizar acciones adicionales si es necesario
             if (createAppointmentResponse.status === 201) {
                 //Enviamos email ---Consumo de API Externa 
-               /* resend.emails.send({
-                    from: 'onboarding@resend.dev',
-                    to: 'gl0069081@gmail.com',//datosUser.data.email
-                    subject: 'Cita Registrada',
-                    html: '<p>Tienes una cita: <strong>'+ selectedScheduler.date +'</strong>!</p>'
-                });*/
-                await resend.emails.send({
-                    from: 'Acme <onboarding@resend.dev>',
-                    to: ['delivered@resend.dev'],
-                    subject: 'hello world',
-                    text: 'it works!',
-                    headers: {
-                      "Access-Control-Allow-Headers" : "Content-Type",
-                    "Access-Control-Allow-Origin": "https://www.resend.com",
-                    "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-                    },
-                    tags: [
-                      {
-                        name: 'category',
-                        value: 'confirm_email',
-                      },
-                    ],
-                  });
-                // La cita se creó con éxito
-                console.log('Cita creada con éxito');
-                // Redirigir a la página /appointments
-                //window.location.href = '/appointments';
-            } else {
-                console.error('Error al crear la cita:', createAppointmentResponse.data);
-            }
+                const dataEMail = {
+                    email : datosUser.data.email,
+                    date : selectedScheduler.date
+                }
+                
+                try{
+                    await httpService(3336).post<any>(`/schedulers/email`, dataEMail);
+                    navigate('/appointments');
+                } catch (error) {
+                    console.error('Error al procesar la solicitud:', error);
+                } 
+            } 
         } catch (error) {
             console.error('Error al procesar la solicitud:', error);
         }
