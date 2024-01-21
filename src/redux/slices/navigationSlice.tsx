@@ -15,17 +15,18 @@ function getMenu(role: ROLE): MenuItem[] {
       {
         label: 'All patients',
         icon: PrimeIcons.USERS,
-        url: '/createAccount',
+        url: '/profile',
       },
       {
         label: 'All bills',
         icon: PrimeIcons.MONEY_BILL,
-        url: '/pricing',
+        url: '/bills',
       },
       {
         label: 'Logout',
         icon: PrimeIcons.SIGN_OUT,
-        url: '/faq',
+        url: '/',
+        command: () => clearJwtToken(),
       },
     ];
   }
@@ -44,7 +45,7 @@ function getMenu(role: ROLE): MenuItem[] {
       {
         label: 'My bills',
         icon: PrimeIcons.MONEY_BILL,
-        url: '/pricing',
+        url: '/bills',
       },
       {
         label: 'Logout',

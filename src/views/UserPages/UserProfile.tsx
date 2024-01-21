@@ -2,19 +2,22 @@ import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Dialog } from 'primereact/dialog';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import AnalysisSummary from '../../components/AnalysisSummary/AnalysisSummary';
-import { mockAnalyses } from '../../mocks/analysis';
+import TableComponent from '../../components/Table/TableComponent';
+import { Analysis, Measurement } from '../../models/devices';
 import { ROLE, User } from '../../models/user';
 import httpService from '../../services/httpService';
 import { getJwtToken, isAdmin } from '../../services/jwtService';
 import './UserProfile.css';
 
-async function getUserData(): Promise<User | null> {
+async function getUserData(userId?: string): Promise<User | null> {
   const token = getJwtToken();
   if (token) {
     try {
-      const response = await httpService().get<User>(`auth/users/${token.id}`);
+      const response = await httpService(3333).get<User>(
+        `auth/users/${userId ?? token.id}`
+      );
       return response.data;
     } catch (error) {
       console.error('Error al obtener datos del usuario:', error);
@@ -25,9 +28,56 @@ async function getUserData(): Promise<User | null> {
   }
 }
 
+async function getAnalysisData(): Promise<Analysis[] | null> {
+  const token = getJwtToken();
+  if (token) {
+    try {
+      const response = await httpService(3334).get<Analysis[]>(
+        `analysis?userId=${token.id}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Error al obtener datos del usuario:', error);
+      return null;
+    }
+  } else {
+    return null;
+  }
+}
+
+async function getMeasurementData(
+  analysis: Analysis
+): Promise<Measurement | null> {
+  try {
+    const response = await httpService(3334).get<Measurement>(
+      `measurement/${analysis.measurement}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener datos del usuario:', error);
+    return null;
+  }
+}
+
+async function getAllUsers(): Promise<User[] | null> {
+  if (isAdmin()) {
+    try {
+      const response = await httpService(3333).get<User[]>(`auth/users`);
+      return response.data;
+    } catch (error) {
+      console.error('Error al obtener la lista de usuarios:', error);
+      return null;
+    }
+  } else {
+    return null;
+  }
+}
+
 const UserProfile: React.FC = () => {
   const navigate = useNavigate();
+  const { userId } = useParams();
   const [user, setUser] = useState<User | null>(null);
+  const [users, setUsers] = useState<User[] | null>(null);
   const [editFormData, setEditFormData] = useState<User>({
     nombre: '',
     apellidos: '',
@@ -38,9 +88,11 @@ const UserProfile: React.FC = () => {
   });
   const [isEditDialogVisible, setIsEditDialogVisible] = useState(false);
   const [isDeleteDialogVisible, setIsDeleteDialogVisible] = useState(false);
+  const [analyses, setAnalyses] = useState<Analysis[] | null>(null);
 
   useEffect(() => {
-    getUserData().then((userData) => {
+    const fetchData = async () => {
+      const userData = await getUserData(userId);
       setUser(userData);
       if (userData) {
         setEditFormData({
@@ -53,8 +105,29 @@ const UserProfile: React.FC = () => {
           rol: (userData.rol as ROLE) || undefined,
         });
       }
-    });
-  }, []);
+      const userAnalysis = await getAnalysisData();
+      if (userAnalysis) {
+        Promise.all(
+          userAnalysis.map((analysis) => {
+            return getMeasurementData(analysis).then((measurement) => {
+              if (!measurement) {
+                return;
+              }
+              measurement.date = new Date(
+                measurement?.date as unknown as string
+              );
+              return { ...analysis, measurement }; // Combinar análisis con su medición
+            });
+          })
+        ).then((combinedData) => {
+          setAnalyses(combinedData as Analysis[]);
+        });
+      }
+      const allUsers = await getAllUsers();
+      setUsers(allUsers);
+    };
+    fetchData();
+  }, [userId]);
 
   const handleEdit = async () => {
     if (!isAdmin()) {
@@ -179,6 +252,19 @@ const UserProfile: React.FC = () => {
     </form>
   );
 
+  const usersColumnsConfig = [
+    { field: 'nombre', header: 'Nombre' },
+    { field: 'apellidos', header: 'Apellidos' },
+    { field: 'email', header: 'Email' },
+    { field: 'companiaSanitaria', header: 'Compañía Sanitaria' },
+    { field: 'tarjetaSanitaria', header: 'Tarjeta Sanitaria' },
+  ];
+
+  const onRowSelect = (e: any) => {
+    // Navegar al perfil del usuario seleccionado
+    navigate(`/profile/${e.data._id}`);
+  };
+
   const userCard = user ? (
     <Card title="Perfil de Usuario" className="user-profile-card">
       <div className="user-details">
@@ -199,8 +285,18 @@ const UserProfile: React.FC = () => {
         </p>
       </div>
       <div className="analysis-summary">
-        <AnalysisSummary analyses={mockAnalyses} />
+        <AnalysisSummary analyses={analyses ?? []} />
       </div>
+
+      {isAdmin() && users && (
+        <TableComponent
+          value={users}
+          columnsConfig={usersColumnsConfig}
+          selectionMode="single"
+          onRowSelect={onRowSelect}
+        />
+      )}
+
       {isAdmin() && (
         <div className="profile-actions">
           <Button label="Editar" icon="pi pi-pencil" onClick={showEditDialog} />
@@ -220,7 +316,6 @@ const UserProfile: React.FC = () => {
   return (
     <div className="user-profile-container">
       {userCard}
-
       <Dialog
         header="Editar Perfil"
         visible={isEditDialogVisible}

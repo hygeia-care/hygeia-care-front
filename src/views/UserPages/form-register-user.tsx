@@ -1,16 +1,16 @@
 // EditUserForm.tsx
 
 import React, { useState } from "react";
-import Modal from "react-modal";
-import { useNavigate } from "react-router-dom";
 import UserFormUI from "../../components/User/user-form";
 import { ROLE } from "../../models/user";
 import httpService from "../../services/httpService";
 import { isNotEmpty, isValidEmail, isValidPassword } from "./validation";
 import "./UserProfile.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setRegistrationSuccess } from "../../redux/slices/authSlice";
+import { RootState } from "../../redux/store";
 
 const RegisterUserForm = () => {
-  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [surnames, setSurnames] = useState("");
@@ -25,12 +25,10 @@ const RegisterUserForm = () => {
     companiaSanitaria: false,
     tarjetaSanitaria: false,
   });
-  const [isRegistrationSuccess, setRegistrationSuccess] = useState(false);
-
-  const closeSuccessMessage = () => {
-    setRegistrationSuccess(false);
-    navigate("/login");
-  };
+   
+  const dispatch = useDispatch();
+  const isRegistrationSuccess = useSelector((state: RootState) => state.auth.isRegistrationSuccess);
+  console.log(isRegistrationSuccess);
 
   const handleEditUser = async (e: any) => {
     e.preventDefault();
@@ -44,7 +42,7 @@ const RegisterUserForm = () => {
     const isPasswordValid: boolean = isValidPassword(password);
 
     // Actualizar el estado de los errores
-    const errors = {
+    const errors = {  
       name: !isNameValid,
       surnames: !isSurnamesValid,
       email: !isEmailValid,
@@ -81,7 +79,7 @@ const RegisterUserForm = () => {
 
         if (response.status === 201) {
           console.log("Registro exitoso");
-          setRegistrationSuccess(true);
+          dispatch(setRegistrationSuccess(true));
           console.log(isRegistrationSuccess);
           console.log("Usuario registrado");
         } else if (response.status === 409) {
@@ -102,33 +100,8 @@ const RegisterUserForm = () => {
 
   return (
     <div>
-      <div>
-        <Modal
-          isOpen={isRegistrationSuccess}
-          onRequestClose={closeSuccessMessage}
-          className="modal-dialog modal-dialog-centered"
-          contentLabel="Registro Exitoso"
-        >
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Registro Exitoso</h5>
-            </div>
-            <div className="modal-body">
-              <p>Se ha registrado el usuario correctamente.</p>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={closeSuccessMessage}
-              >
-                Cerrar
-              </button>
-            </div>
-          </div>
-        </Modal>
-      </div>
       <UserFormUI
+        isRegistrationSuccess={isRegistrationSuccess}
         name={name}
         surnames={surnames}
         email={email}
@@ -150,3 +123,4 @@ const RegisterUserForm = () => {
 };
 
 export default RegisterUserForm;
+
