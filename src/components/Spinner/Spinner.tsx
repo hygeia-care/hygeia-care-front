@@ -1,10 +1,10 @@
 // Spinner.tsx
 import React from 'react';
-import './Spinner.css'; 
+import './Spinner.css';
 
 const Spinner = () => {
   return (
-    <div className="spinner-overlay">
+    <div data-testid="http-spinner" className="spinner-overlay">
       <div className="spinner-container" />
     </div>
   );
