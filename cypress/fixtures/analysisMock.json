@@ -1,0 +1,12 @@
+[
+  {
+    "_id": "1",
+    "value": 10,
+    "measurement": "m1"
+  },
+  {
+    "_id": "2",
+    "value": 20,
+    "measurement": "m2"
+  }
+]
