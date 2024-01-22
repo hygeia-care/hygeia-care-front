@@ -1,12 +1,15 @@
-/*
+
 describe('Pruebas para Appointment Management', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000');
     cy.login();
+    cy.visit('http://localhost:3000/appointments');
+
   });
 
 
   it('Accede a mis citas', () => {
+    mockUserData();
     goToMyAppointments();
     cy.get('h1').should('contain', 'MIS CITAS');
     mockAppointmentsData();
@@ -15,7 +18,7 @@ describe('Pruebas para Appointment Management', () => {
   });
 
   it('Elimina una cita', () => {
-    
+    mockUserData()
     goToMyAppointments();
 
     cy.get('.table-container').should('contain', 'Cita Otorrino');
@@ -79,7 +82,13 @@ function mockDeleteAppointment() {
   }).as('appointmentData');
 }
 
-*/
-
+function mockUserData() {
+  cy.fixture('userData.json').then((response) => {
+    cy.intercept('GET', '/api/v1/auth/users/*', {
+      statusCode: 200,
+      body: response,
+    }).as('userData');
+  });
+}
 
 
