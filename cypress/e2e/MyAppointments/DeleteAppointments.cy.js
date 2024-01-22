@@ -66,7 +66,7 @@ function goToMyAppointments() {
 }
 
 function mockDeleteAppointment() {
-  cy.intercept('DELETE', '/api/v1/appointments/date/2023-12-01T14:00:00.000Z/patient/6589ba2dc851232a289a565b', (req) => {
+  cy.intercept('DELETE', '/api/v1/appointments/date/2024-01-22T21:55:07.256Z/patient/6589ba2dc851232a289a565b', (req) => {
 
     req.reply({
       statusCode: 200, 
