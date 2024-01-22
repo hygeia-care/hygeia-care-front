@@ -13,7 +13,7 @@ describe('Pruebas para Appointment Management', () => {
     goToMyAppointments();
     cy.get('h1').should('contain', 'MIS CITAS');
     mockAppointmentsData();
-    cy.get('.table-container', {timeout: 10000}).should('contain', 'Cita Otorrino');
+    cy.get('.table-container').should('contain', 'Cita Otorrino');
 
   });
 
