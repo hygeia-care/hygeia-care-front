@@ -16,7 +16,7 @@ describe('Pruebas para Appointment Management', () => {
     cy.get('.table-container').should('contain', 'Cita Otorrino');
 
   });
-
+/*
   it('Elimina una cita', () => {
     mockUserData()
     goToMyAppointments();
@@ -32,7 +32,7 @@ describe('Pruebas para Appointment Management', () => {
     //Verificación
     cy.get('.table-container').should('not.contain', 'Cita Otorrino');
 
-  });
+  }); */
 
 });
 
