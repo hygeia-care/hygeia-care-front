@@ -171,8 +171,8 @@ const MyAppointments = () => {
           </DataTable>
         )}
       </div>
-      <div className="row" style={{ display: 'flex', gap: '10px' }}>
-          <div className="back-link">
+      <div className="buttons-container" style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+          <div className="buttons-row">
               <Link to="/">
                   <Button label="Volver al Inicio" className="p-button-success custom-botton" />
               </Link>
@@ -183,7 +183,6 @@ const MyAppointments = () => {
               </Link>
           </div>
       </div>
-
 
       <Dialog 
         visible={isDialogVisible} 

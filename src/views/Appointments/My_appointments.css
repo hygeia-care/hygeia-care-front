@@ -16,12 +16,8 @@
   margin-top: 10px;
 }
 
-.row {
+.buttons-row {
   display: flex;
   gap: 10px;
-  /* Otros estilos que necesites */
-}
-
-.back-link, .new-appointment {
-  /* Estilos específicos para estos elementos si son necesarios */
+  justify-content: center; /* Align buttons in the center of the container */
 }
