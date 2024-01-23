@@ -153,6 +153,8 @@ const MyAppointments = () => {
 
   return (
     <div className="appointments-container">
+      <hr style={{ margin: '20px 0', border: '0', height: '1px', backgroundColor: '#E6F7FF' }} />
+
       <h1>MIS CITAS</h1>
       <div className="user-info">
         <p style={{ backgroundColor: '#E6F7FF', borderRadius: '8px', padding: '10px' }}>{userName}</p>
@@ -170,17 +172,18 @@ const MyAppointments = () => {
         )}
       </div>
       <div className="row" style={{ display: 'flex', gap: '10px' }}>
-        <div className="back-link">
-          <Link to="/">
-            <Button label="Volver al Inicio" className="p-button-success custom-botton" />
-          </Link>
-        </div>
-        <div className="new-appointment">
-          <Link to="/schedulers">
-            <Button label="Pedir Cita" className="p-button custom-botton" />
-          </Link>
-        </div>
+          <div className="back-link">
+              <Link to="/">
+                  <Button label="Volver al Inicio" className="p-button-success custom-botton" />
+              </Link>
+          </div>
+          <div className="new-appointment">
+              <Link to="/schedulers">
+                  <Button label="Pedir Cita" className="p-button custom-botton" />
+              </Link>
+          </div>
       </div>
+
 
       <Dialog 
         visible={isDialogVisible} 

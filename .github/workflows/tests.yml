@@ -15,9 +15,6 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Print Current Date
-        run: date --utc +"%Y-%m-%dT%H:%M:%S.%3NZ"
-
       - name: Install Dependencies
         run: npm install
       - name: Start Server

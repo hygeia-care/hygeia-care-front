@@ -15,3 +15,13 @@
 .custom-botton {
   margin-top: 10px;
 }
+
+.row {
+  display: flex;
+  gap: 10px;
+  /* Otros estilos que necesites */
+}
+
+.back-link, .new-appointment {
+  /* Estilos específicos para estos elementos si son necesarios */
+}

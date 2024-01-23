@@ -26,7 +26,7 @@ describe('Pruebas para Appointment Management', () => {
 
   it('Elimina una cita', () => {
 
-    /*
+    
     mockUserData()
     goToMyAppointments();
 
@@ -40,7 +40,7 @@ describe('Pruebas para Appointment Management', () => {
 
     //Verificación
     cy.get('.table-container').should('not.contain', 'Cita Otorrino');
-    */
+    
 
   }); 
 
