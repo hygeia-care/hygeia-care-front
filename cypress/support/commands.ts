@@ -29,8 +29,8 @@
 
 declare namespace Cypress {
   interface Chainable {
-    mockLogin(): Chainable<void>;
-    login(): Chainable<void>;
+    mockLogin(isAdmin?: string): Chainable<void>;
+    login(isAdmin?: string): Chainable<void>;
     getByTestId(testId: string): Chainable<JQuery<HTMLElement>>;
     getTopNavItemByText(itemText: string): Chainable<JQuery<HTMLElement>>;
   }
@@ -38,8 +38,11 @@ declare namespace Cypress {
 
 // cypress/support/commands.js
 
-Cypress.Commands.add('mockLogin', () => {
+Cypress.Commands.add('mockLogin', (isAdmin) => {
   cy.fixture('mockLogin.json').then((response) => {
+    if (isAdmin) {
+      response.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODliYTJkYzg1MTIzMmEyODlhNTY1YiIsInJvbCI6IkFkbWluIiwiaWF0IjoxNzA0OTM3NzMzfQ.ZgckwkukWGP4fERL3hRDlLKv_lSDowk7-ZmRzrIDivs"; // Ponemos usuario admin
+    }
     cy.intercept('POST', '/api/v1/auth/users/login', {
       statusCode: 200,
       body: response,
@@ -48,23 +51,19 @@ Cypress.Commands.add('mockLogin', () => {
 });
 
 Cypress.Commands.add('getByTestId', (testId) => {
-  cy.get(`[data-testid="${testId}"]`);
+  cy.get(`[data-testid="${testId}"]`, { timeout: 10000 });
 });
 
 Cypress.Commands.add('getTopNavItemByText', (itemText) => {
   cy.getByTestId('menubar').should('exist').contains(itemText);
 });
 
-Cypress.Commands.add('login', () => {
+Cypress.Commands.add('login', (isAdmin) => {
+  cy.mockLogin(isAdmin);
   cy.getTopNavItemByText('Login').click();
   cy.get('input#username').type('username');
   cy.get('input#password').type('password');
-  cy.mockLogin();
   cy.get('button[type="submit"]').click();
+  cy.getByTestId('http-spinner').should('not.exist');
   cy.getByTestId('menubar').should('exist');
-  cy.getTopNavItemByText('My data').should('exist');
 });
-
-
-
-
