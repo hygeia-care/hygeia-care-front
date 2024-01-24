@@ -1,0 +1,22 @@
+[
+  {
+    "_id": "1",
+    "name": "Test Bill",
+    "description": "Some test description",
+    "total": 50,
+    "services": "Some test services",
+    "issueDate": "2023-12-01T14:00:00.000Z",
+    "patient": "Test Patient",
+    "appointment": "Test Appointment"
+  },
+  {
+    "_id": "2",
+    "name": "Test Bill 2",
+    "description": "Some test description 2",
+    "total": 100,
+    "services": "Some test services 2",
+    "issueDate": "2023-12-02T14:00:00.000Z",
+    "patient": "Test Patient 2",
+    "appointment": "Test Appointment 2"
+  }
+]

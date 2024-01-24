@@ -1,3 +1,4 @@
+
 describe('Pruebas para AnalysisSummary', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000');
