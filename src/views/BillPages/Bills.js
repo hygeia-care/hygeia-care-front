@@ -165,7 +165,7 @@ function Bills() {
     
     <Fragment>
     <Alert message={message} onClose={onAlertClose}/>            
-    <table className="table table-striped table-bordered">
+    <table id="table-bills" className="table table-striped table-bordered">
         <thead className="thead-dark">
             <tr>
                 <th>Name</th>
